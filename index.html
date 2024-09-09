@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revisão de html e css</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Sistema de Ponto Eletrônico</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1 id="titulo">Revisão de HTML e CSS</h1>
-    <div class="entradas-usuario">
-        <input id="nome-input" type="text" placeholder="Nome">
-        <input id="idade-input" type="number" placeholder="Idade">
-        <input id="email-input" type="email" placeholder="Email">
-        <button id="ok">Ok!</button>
+    <div class="data-hora">
+        <p id="dia-semana"></p>
+        <p id="data-atual"></p>
+        <p id="hora-atual"></p>
     </div>
-    
-    <p class="rodape">Criado por airtonbjunior</p>
+    <button id="btn-registrar-ponto">Registrar ponto</button>
 
-    <script src="script.js"></script>
+    <dialog id="dialog-ponto">
+        <p id="dialog-data">Data</p>
+        <p id="dialog-hora">Hora</p>
+        <button id="btn-dialog-entrada">Entrada</button>
+        <button id="btn-dialog-saida">Saída</button>
+        <button id="dialog-fechar">X</button>
+    </dialog>
+
+    <script src="js/index.js"></script>
 </body>
 </html>
