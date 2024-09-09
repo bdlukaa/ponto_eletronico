@@ -61,13 +61,17 @@ btnDialogFechar.addEventListener("click", () => {
     dialogPonto.close();
 })
 
+let userLocation = null;
 function getUserLocation() {
     navigator.geolocation.getCurrentPosition((position) => {   
+        userLocation = {
             "lat": position.coords.latitude,
             "long": position.coords.longitude
         }
     });
+    return userLocation;
 }
+getUserLocation();
 
 
 function register() {
