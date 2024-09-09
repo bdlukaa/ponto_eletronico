@@ -40,10 +40,19 @@ btnDialogEntrada.addEventListener("click", () => {
 const btnDialogSaida = document.getElementById("btn-dialog-saida");
 btnDialogSaida.addEventListener("click", () => {
 
-    // crie um objeto e salve a data, hora, location, id e type
-    // o id é 1 (fixo)
-    // o type será "saida"
-    // o location pode ser recuperado com a funcao getUserLocation (será undefined por enquanto)
+    let currentDate = getCurrentDate();
+    let currentTime = getCurrentTime();
+    let userLocation = getUserLocation();
+
+    ponto = {
+        "date": currentDate,
+        "time": currentTime,
+        "location": userLocation,
+        "id": 1,
+        "type": "saída",
+    }
+
+    console.log(ponto);
 
 });
 
@@ -54,11 +63,9 @@ btnDialogFechar.addEventListener("click", () => {
 
 function getUserLocation() {
     navigator.geolocation.getCurrentPosition((position) => {   
-        let userLocation = {
             "lat": position.coords.latitude,
             "long": position.coords.longitude
         }
-        return userLocation;
     });
 }
 
