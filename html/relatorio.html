@@ -6,6 +6,24 @@
     <title>Relatório de pontos</title>
 </head>
 <body>
-    
+    <h1>Registrar Ponto</h1>
+    <input type="date" id="data-registro">
+    <textarea id="observacao-registro" placeholder="Adicione uma observação"></textarea>
+    <button id="btn-registrar">Registrar Ponto</button>
+    <ul id="lista-pontos-registrados"></ul>
+
+    <!-- p/ editar registro -->
+<dialog id="dialog-editar-registro">
+    <h2>Editar Registro</h2>
+    <p id="dialog-editar-data"></p>
+    <p id="dialog-editar-hora"></p>
+    <label for="editar-observacao">Observação:</label>
+    <input type="text" id="editar-observacao">
+    <button id="btn-dialog-editar">Salvar Edição</button>
+    <button id="dialog-fechar-editar">Fechar</button>
+</dialog>
+
+
+    <script src="index.js"></script> <!-- Incluindo o arquivo JavaScript -->
 </body>
 </html>
