@@ -18,7 +18,10 @@ dataAtual.textContent = getCurrentDate();
 dialogData.textContent = `Data: ${getCurrentDate()}`;
 
 // Event Listeners
-btnRegistrarPonto.addEventListener("click", register);
+btnRegistrarPonto.addEventListener("click", () => {
+  setRegisterType();
+  register();
+});
 btnDialogRegister.addEventListener("click", handleRegister);
 btnDialogFechar.addEventListener("click", () => {
   console.log("Closing dialog.");
@@ -28,27 +31,39 @@ btnDialogFechar.addEventListener("click", () => {
 // Utility Functions
 function updateContentHour() {
   horaAtual.textContent = getCurrentTime();
-  console.log(`Updated hour: ${horaAtual.textContent}`);
+  // console.log(`Updated hour: ${horaAtual.textContent}`);
 }
 
 function getCurrentTime() {
   const date = new Date();
-  const currentTime = `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
-  console.log(`Current time: ${currentTime}`);
+  const currentTime = `${String(date.getHours()).padStart(2, "0")}:${String(
+    date.getMinutes()
+  ).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+  // console.log(`Current time: ${currentTime}`);
   return currentTime;
 }
 
 function getCurrentDate() {
   const date = new Date();
-  const currentDate = `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`;
-  console.log(`Current date: ${currentDate}`);
+  const currentDate = `${String(date.getDate()).padStart(2, "0")}/${String(
+    date.getMonth() + 1
+  ).padStart(2, "0")}/${date.getFullYear()}`;
+  // console.log(`Current date: ${currentDate}`);
   return currentDate;
 }
 
 function getWeekDay() {
-  const daynames = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+  const daynames = [
+    "Domingo",
+    "Segunda-feira",
+    "Terça-feira",
+    "Quarta-feira",
+    "Quinta-feira",
+    "Sexta-feira",
+    "Sábado",
+  ];
   const weekDay = daynames[new Date().getDay()];
-  console.log(`Week day: ${weekDay}`);
+  // console.log(`Week day: ${weekDay}`);
   return weekDay;
 }
 
@@ -56,10 +71,10 @@ function getWeekDay() {
 function setRegisterType() {
   const lastType = localStorage.getItem("lastRegisterType") || "entrada";
   const nextTypeMap = {
-    "entrada": "intervalo",
-    "intervalo": "volta-intervalo",
+    entrada: "intervalo",
+    intervalo: "volta-intervalo",
     "volta-intervalo": "saida",
-    "saida": "entrada"
+    saida: "entrada",
   };
   selectRegisterType.value = nextTypeMap[lastType];
   console.log(`Set register type to: ${selectRegisterType.value}`);
@@ -104,7 +119,9 @@ async function createRegister(registerType) {
 
 function register() {
   const lastRegister = JSON.parse(localStorage.getItem("lastRegister"));
-  const dialogUltimoRegistro = document.getElementById("dialog-ultimo-registro");
+  const dialogUltimoRegistro = document.getElementById(
+    "dialog-ultimo-registro"
+  );
 
   if (lastRegister) {
     dialogUltimoRegistro.textContent = `Último Registro: ${lastRegister.date} | ${lastRegister.time} | ${lastRegister.type}`;
@@ -157,7 +174,7 @@ function getUserLocation() {
       (position) => {
         const userLocation = {
           latitude: position.coords.latitude,
-          longitude: position.coords.longitude
+          longitude: position.coords.longitude,
         };
         console.log("User location:", userLocation);
         resolve(userLocation);
