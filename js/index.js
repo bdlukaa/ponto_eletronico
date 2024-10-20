@@ -12,6 +12,9 @@ const btnDialogFechar = document.getElementById("dialog-fechar");
 const alertaSucesso = document.getElementById("alerta-ponto-registrado");
 const pontosRegistrados = document.getElementById("lista-pontos-registrados");
 
+const REGISTER_KEY = "register";
+const LAST_REGISTER_KEY = "lastRegister";
+
 // Initialize Display
 diaSemana.textContent = getWeekDay();
 dataAtual.textContent = getCurrentDate();
@@ -84,7 +87,7 @@ async function handleRegister() {
   try {
     const register = await createRegister(selectRegisterType.value);
     saveRegisterLocalStorage(register);
-    localStorage.setItem("lastRegister", JSON.stringify(register));
+    localStorage.setItem(LAST_REGISTER_KEY, JSON.stringify(register));
     console.log("Register saved to localStorage:", register);
 
     showSuccessAlert();
@@ -118,7 +121,7 @@ async function createRegister(registerType) {
 }
 
 function register() {
-  const lastRegister = JSON.parse(localStorage.getItem("lastRegister"));
+  const lastRegister = JSON.parse(localStorage.getItem(LAST_REGISTER_KEY));
   const dialogUltimoRegistro = document.getElementById(
     "dialog-ultimo-registro"
   );
@@ -141,9 +144,9 @@ function register() {
 
 // LocalStorage Handling
 function saveRegisterLocalStorage(register) {
-  const registers = getRegisterLocalStorage("register");
+  const registers = getRegisterLocalStorage(REGISTER_KEY);
   registers.push(register);
-  localStorage.setItem("register", JSON.stringify(registers));
+  localStorage.setItem(REGISTER_KEY, JSON.stringify(registers));
   console.log("Updated localStorage with new register:", registers);
 }
 
@@ -157,7 +160,7 @@ function getRegisterLocalStorage(key) {
 // Display Registered Points
 function displayRegisteredPoints() {
   pontosRegistrados.innerHTML = "";
-  const registers = getRegisterLocalStorage("register");
+  const registers = getRegisterLocalStorage(REGISTER_KEY);
 
   registers.forEach((register) => {
     const listItem = document.createElement("li");
