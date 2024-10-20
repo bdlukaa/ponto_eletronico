@@ -7,31 +7,42 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="data-hora">
-        <p id="dia-semana"></p>
-        <p id="data-atual"></p>
-        <p id="hora-atual"></p>
-    </div>
-    <button id="btn-registrar-ponto">Registrar ponto</button>
+    <header>
+        <h1>Sistema de Ponto Eletrônico</h1>
+    </header>
 
-    <dialog id="dialog-ponto">
-        <p id="dialog-data"></p>
-        <p id="dialog-hora"></p>
-        <select name="register-type" id="register-type">
-            <option value="entrada">Entrada</option>
-            <option value="intervalo">Intervalo</option>
-            <option value="volta-intervalo">Volta Intervalo</option>
-            <option value="saida">Saída</option>
-        </select>
-        <button id="btn-dialog-register">Registrar</button>
-        <p id="dialog-ultimo-registro"></p>
-        <button id="dialog-fechar">X</button>
-    </dialog>
+    <main>
+        <section class="data-hora">
+            <p id="dia-semana"></p>
+            <p id="data-atual"></p>
+            <p id="hora-atual"></p>
+        </section>
 
-    <div id="alerta-ponto-registrado" class="hidden">
-        <p>Ponto registrado com sucesso!</p>
-    </div>
+        <section class="registro-ponto">
+            <button id="btn-registrar-ponto">Registrar ponto</button>
 
+            <dialog id="dialog-ponto">
+                <form id="form-ponto">
+                    <p id="dialog-data"></p>
+                    <p id="dialog-hora"></p>
+                    <label for="register-type">Tipo de Registro:</label>
+                    <select name="register-type" id="register-type">
+                        <option value="entrada">Entrada</option>
+                        <option value="intervalo">Intervalo</option>
+                        <option value="volta-intervalo">Volta Intervalo</option>
+                        <option value="saida">Saída</option>
+                    </select>
+                    <button type="submit" id="btn-dialog-register">Registrar</button>
+                </form>
+                <p id="dialog-ultimo-registro"></p>
+                <button id="dialog-fechar">X</button>
+            </dialog>
+        </section>
+
+        <div id="alerta-ponto-registrado" class="hidden">
+            <p>Ponto registrado com sucesso!</p>
+        </div>
+    </main>
 
     <script src="js/index.js"></script>
 </body>
