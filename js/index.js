@@ -241,3 +241,18 @@ setInterval(updateContentHour, 1000);
 console.log(getCurrentTime());
 console.log(getCurrentDate());
 console.log(getWeekDay());
+
+const pontosRegistrados = document.getElementById("lista-pontos-registrados");
+
+function displayRegisteredPoints() {
+  pontosRegistrados.innerHTML = "";
+  let registers = getRegisterLocalStorage("register");
+
+  registers.forEach((register) => {
+    let listItem = document.createElement("li");
+    listItem.textContent = `${register.date} | ${register.time} | ${register.type}`;
+    pontosRegistrados.appendChild(listItem);
+  });
+}
+
+displayRegisteredPoints();
