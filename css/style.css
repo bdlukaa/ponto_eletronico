@@ -42,3 +42,13 @@
     opacity: 1;
     transform: translateY(0);
 }
+
+.registro-passado {
+    color: purple;
+    font-weight: bold;
+}
+
+.registro-com-observacao {
+    color: blue; /* Ou qualquer cor que você queira */
+    font-weight: bold;
+}
