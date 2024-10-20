@@ -20,26 +20,36 @@ dialogData.textContent = `Data: ${getCurrentDate()}`;
 // Event Listeners
 btnRegistrarPonto.addEventListener("click", register);
 btnDialogRegister.addEventListener("click", handleRegister);
-btnDialogFechar.addEventListener("click", () => dialogPonto.close());
+btnDialogFechar.addEventListener("click", () => {
+  console.log("Closing dialog.");
+  dialogPonto.close();
+});
 
 // Utility Functions
 function updateContentHour() {
   horaAtual.textContent = getCurrentTime();
+  console.log(`Updated hour: ${horaAtual.textContent}`);
 }
 
 function getCurrentTime() {
   const date = new Date();
-  return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+  const currentTime = `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+  console.log(`Current time: ${currentTime}`);
+  return currentTime;
 }
 
 function getCurrentDate() {
   const date = new Date();
-  return `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`;
+  const currentDate = `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`;
+  console.log(`Current date: ${currentDate}`);
+  return currentDate;
 }
 
 function getWeekDay() {
   const daynames = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
-  return daynames[new Date().getDay()];
+  const weekDay = daynames[new Date().getDay()];
+  console.log(`Week day: ${weekDay}`);
+  return weekDay;
 }
 
 // Register Handling
@@ -52,34 +62,44 @@ function setRegisterType() {
     "saida": "entrada"
   };
   selectRegisterType.value = nextTypeMap[lastType];
+  console.log(`Set register type to: ${selectRegisterType.value}`);
 }
 
 async function handleRegister() {
-  const register = await createRegister(selectRegisterType.value);
-  saveRegisterLocalStorage(register);
-  localStorage.setItem("lastRegister", JSON.stringify(register));
+  try {
+    const register = await createRegister(selectRegisterType.value);
+    saveRegisterLocalStorage(register);
+    localStorage.setItem("lastRegister", JSON.stringify(register));
+    console.log("Register saved to localStorage:", register);
 
-  showSuccessAlert();
-  dialogPonto.close();
+    showSuccessAlert();
+    dialogPonto.close();
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
 }
 
 function showSuccessAlert() {
   alertaSucesso.classList.remove("hidden");
   alertaSucesso.classList.add("show");
+  console.log("Success alert shown.");
   setTimeout(() => {
     alertaSucesso.classList.replace("show", "hidden");
+    console.log("Success alert hidden.");
   }, 5000);
 }
 
 async function createRegister(registerType) {
   const location = await getUserLocation();
-  return {
+  const register = {
     date: getCurrentDate(),
     time: getCurrentTime(),
     location,
-    id: 1,
+    id: Date.now(), // Use timestamp as unique ID
     type: registerType,
   };
+  console.log("Created register:", register);
+  return register;
 }
 
 function register() {
@@ -88,6 +108,9 @@ function register() {
 
   if (lastRegister) {
     dialogUltimoRegistro.textContent = `Último Registro: ${lastRegister.date} | ${lastRegister.time} | ${lastRegister.type}`;
+    console.log("Last register displayed:", lastRegister);
+  } else {
+    console.log("No last register found.");
   }
 
   dialogHora.textContent = `Hora: ${getCurrentTime()}`;
@@ -96,6 +119,7 @@ function register() {
   }, 1000);
 
   dialogPonto.showModal();
+  console.log("Dialog for registering points shown.");
 }
 
 // LocalStorage Handling
@@ -103,10 +127,14 @@ function saveRegisterLocalStorage(register) {
   const registers = getRegisterLocalStorage("register");
   registers.push(register);
   localStorage.setItem("register", JSON.stringify(registers));
+  console.log("Updated localStorage with new register:", registers);
 }
 
 function getRegisterLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key)) || [];
+  const storedData = localStorage.getItem(key);
+  const registers = storedData ? JSON.parse(storedData) : [];
+  console.log(`Retrieved from localStorage (${key}):`, registers);
+  return registers;
 }
 
 // Display Registered Points
@@ -118,6 +146,7 @@ function displayRegisteredPoints() {
     const listItem = document.createElement("li");
     listItem.textContent = `${register.date} | ${register.time} | ${register.type}`;
     pontosRegistrados.appendChild(listItem);
+    console.log("Displayed registered point:", listItem.textContent);
   });
 }
 
@@ -125,11 +154,18 @@ function displayRegisteredPoints() {
 function getUserLocation() {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(
-      (position) => resolve({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      }),
-      (error) => reject(`Erro ${error}`)
+      (position) => {
+        const userLocation = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
+        console.log("User location:", userLocation);
+        resolve(userLocation);
+      },
+      (error) => {
+        console.error("Error getting location:", error);
+        reject(`Erro ${error}`);
+      }
     );
   });
 }
