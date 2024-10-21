@@ -25,3 +25,8 @@
 .show {
     opacity: 1;
 }
+
+.registro-passado {
+    background-color: purple;
+    color: black
+}
