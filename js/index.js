@@ -11,6 +11,8 @@ const btnDialogRegister = document.getElementById("btn-dialog-register");
 const btnDialogFechar = document.getElementById("dialog-fechar");
 const alertaSucesso = document.getElementById("alerta-ponto-registrado");
 const pontosRegistrados = document.getElementById("lista-pontos-registrados");
+//entrada de dados
+const registerDateInput = document.getElementById("register-date");
 
 const REGISTER_KEY = "register";
 const LAST_REGISTER_KEY = "lastRegister";
@@ -70,6 +72,17 @@ function getWeekDay() {
   return weekDay;
 }
 
+function setMaxDate() {
+  //representa data e hora atuais
+  const today = new Date();
+  
+  //converte data atual p/ string
+  const maxDate = today.toISOString().split("T")[0]; // índice 0 indica data no formato YYYY-MM-DD
+  registerDateInput.setAttribute("max", maxDate);
+}
+
+setMaxDate();
+
 // Register Handling
 function setRegisterType() {
   const lastType = localStorage.getItem("lastRegisterType") || "entrada";
@@ -84,8 +97,17 @@ function setRegisterType() {
 }
 
 async function handleRegister() {
+  //cria obj a partir do valor do campo selecionado
+  const selectedDate = new Date(registerDateInput.value);
+  const currentDate = new Date();
+
+  if (selectedDate > currentDate){
+    alert("Não é possível registrar ponto em datas futuras!");
+    return;
+  }
+
   try {
-    const register = await createRegister(selectRegisterType.value);
+    const register = await createRegister(selectRegisterType.value, registerDateInput.value);
     saveRegisterLocalStorage(register);
     localStorage.setItem(LAST_REGISTER_KEY, JSON.stringify(register));
     console.log("Register saved to localStorage:", register);
@@ -107,10 +129,10 @@ function showSuccessAlert() {
   }, 5000);
 }
 
-async function createRegister(registerType) {
+async function createRegister(registerType, registerDate) {
   const location = await getUserLocation();
   const register = {
-    date: getCurrentDate(),
+    date: registerDate || getCurrentDate(), //tbm usa a data de registro
     time: getCurrentTime(),
     location,
     id: Date.now(), // Use timestamp as unique ID
@@ -161,9 +183,17 @@ function getRegisterLocalStorage(key) {
 function displayRegisteredPoints() {
   pontosRegistrados.innerHTML = "";
   const registers = getRegisterLocalStorage(REGISTER_KEY);
+  const currentDate = new Date();
 
   registers.forEach((register) => {
     const listItem = document.createElement("li");
+    //converte p/ uma string compatível para comparação de datas
+    const registerDate = new Date(register.date.split("/").reverse().join("-")); // Converte para formato Date
+
+    if (registerDate < currentDate){
+      listItem.classList.add("registro-passado");
+    }
+
     listItem.textContent = `${register.date} | ${register.time} | ${register.type}`;
     pontosRegistrados.appendChild(listItem);
     console.log("Displayed registered point:", listItem.textContent);
