@@ -11,13 +11,6 @@ const btnDialogRegister = document.getElementById("btn-dialog-register");
 const btnDialogFechar = document.getElementById("dialog-fechar");
 const alertaSucesso = document.getElementById("alerta-ponto-registrado");
 const pontosRegistrados = document.getElementById("lista-pontos-registrados");
-// DOM Elements p/ edição
-const dialogEditarRegistro = document.getElementById("dialog-editar-registro");
-const dialogEditarData = document.getElementById("dialog-editar-data");
-const dialogEditarHora = document.getElementById("dialog-editar-hora");
-const btnDialogEditar = document.getElementById("btn-dialog-editar");
-const btnDialogFecharEditar = document.getElementById("dialog-fechar-editar");
-
 
 const REGISTER_KEY = "register";
 const LAST_REGISTER_KEY = "lastRegister";
@@ -37,20 +30,6 @@ btnDialogFechar.addEventListener("click", () => {
   console.log("Closing dialog.");
   dialogPonto.close();
 });
-
-btnDialogEditar.addEventListener("click", () => {
-  const novaObservacao = document.getElementById("editar-observacao").value;
-  const registers = getRegisterLocalStorage(REGISTER_KEY);
-  const registerIndex = registers.findIndex(r => r.id === editingRegisterId);
-
-  if (registerIndex !== -1) {
-    registers[registerIndex].observacao = novaObservacao;
-    localStorage.setItem(REGISTER_KEY, JSON.stringify(registers));
-    displayRegisteredPoints(); // Atualiza a lista de registros exibidos
-    dialogEditarRegistro.close();
-  }
-});
-
 
 // Utility Functions
 function updateContentHour() {
@@ -104,29 +83,9 @@ function setRegisterType() {
   console.log(`Set register type to: ${selectRegisterType.value}`);
 }
 
-function openEditDialog(register) {
-  dialogEditarData.textContent = `Data: ${register.date}`;
-  dialogEditarHora.textContent = `Hora: ${register.time}`;
-  document.getElementById("editar-observacao").value = register.observacao || "";
-  dialogEditarRegistro.showModal();
-}
-
-
 async function handleRegister() {
   try {
-    const dataRegistro = document.getElementById("data-registro").value;
-    const dataEscolhida = new Date(dataRegistro);
-    const dataAtual = new Date();
-
-    //verifica se a data é futura
-    if(dataEscolhida > dataAtual){
-      alert("Não é permitido o registro em uma data futura!");
-      return;
-    }
-
-    //observação no campo de texto
-    const observacao = document.getElementById("observacao").value
-    const register = await createRegister(selectRegisterType.value, observacao);
+    const register = await createRegister(selectRegisterType.value);
     saveRegisterLocalStorage(register);
     localStorage.setItem(LAST_REGISTER_KEY, JSON.stringify(register));
     console.log("Register saved to localStorage:", register);
@@ -148,7 +107,7 @@ function showSuccessAlert() {
   }, 5000);
 }
 
-async function createRegister(registerType, observacao) {
+async function createRegister(registerType) {
   const location = await getUserLocation();
   const register = {
     date: getCurrentDate(),
@@ -156,7 +115,6 @@ async function createRegister(registerType, observacao) {
     location,
     id: Date.now(), // Use timestamp as unique ID
     type: registerType,
-    observation: observacao, //adiciona observacao
   };
   console.log("Created register:", register);
   return register;
@@ -199,41 +157,18 @@ function getRegisterLocalStorage(key) {
   return registers;
 }
 
+// Display Registered Points
 function displayRegisteredPoints() {
   pontosRegistrados.innerHTML = "";
   const registers = getRegisterLocalStorage(REGISTER_KEY);
 
   registers.forEach((register) => {
     const listItem = document.createElement("li");
-
-    // botão de editar
-    const editButton = document.createElement("button");
-    editButton.textContent = "Editar";
-    editButton.addEventListener("click", () => {
-      editingRegisterId = register.id; // Salva o ID do registro que está sendo editado
-      openEditDialog(register);
-    });
-
-    // verifica se o registro foi feito no passado
-    const dataRegistro = new Date(register.date);
-    const dataAtual = new Date();
-    if (dataRegistro < dataAtual) {
-      listItem.classList.add("registro-passado");
-    }
-
-    // inclui a observação
     listItem.textContent = `${register.date} | ${register.time} | ${register.type}`;
-    if (register.observacao) {
-      listItem.textContent += ` | Observação: ${register.observacao}`;
-    }
-
-    // adiciona o botão ao item da lista
-    listItem.appendChild(editButton);
     pontosRegistrados.appendChild(listItem);
     console.log("Displayed registered point:", listItem.textContent);
   });
 }
-
 
 // Geolocation
 function getUserLocation() {
