@@ -1,54 +1,27 @@
 .data-hora {
     text-align: center;
-    font-size: 1.2em;
-    margin-bottom: 20px;
 }
 
 #dialog-fechar {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    transition: background-color 0.3s ease;
-}
-
-#dialog-fechar:hover {
-    background-color: #d32f2f;
+    top: 0;
+    right: 0;
+    
 }
 
 #alerta-ponto-registrado {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 15px;
-    background-color: #4caf50;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px;
+    background-color: green;
     color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .hidden {
     opacity: 0;
-    transform: translateY(20px);
 }
 
 .show {
     opacity: 1;
-    transform: translateY(0);
-}
-
-.registro-passado {
-    color: purple;
-    font-weight: bold;
-}
-
-.registro-com-observacao {
-    color: blue; /* Ou qualquer cor que você queira */
-    font-weight: bold;
 }
