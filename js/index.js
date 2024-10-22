@@ -198,6 +198,8 @@ function displayRegisteredPoints() {
 
     if (registerDate < currentDate) {
       listItem.classList.add("registro-passado");
+    } else {
+      listItem.classList.add("pontos-registrados");
     }
 
     listItem.textContent = `${register.date} | ${register.time} | ${register.type}`;

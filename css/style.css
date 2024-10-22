@@ -6,17 +6,17 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: #f7f9fc;
+    color: #222;
     line-height: 1.6;
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #3b7e4a;
     color: white;
     padding: 20px 0;
     text-align: center;
-    font-size: 2em;
+    font-size: 2.2em;
 }
 
 main {
@@ -45,62 +45,80 @@ h2 {
 
 .data-hora p {
     margin: 5px 0;
-    color: #555;
+    color: #444;
 }
 
 #btn-registrar-ponto {
-    background-color: #4CAF50;
+    background-color: #2d6a39;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     font-size: 1.2em;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 #btn-registrar-ponto:hover {
-    background-color: #45a049;
+    background-color: #249031;
+    transform: translateY(-2px);
 }
 
 dialog {
     padding: 20px;
     border-radius: 8px;
     border: 2px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     max-width: 400px;
     width: 100%;
+    background-color: #fff;
 }
 
 label, select, input {
     display: block;
     width: 100%;
     margin: 10px 0;
+    color: #222;
 }
 
 input, select {
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 12px;
+    border: 1px solid #aaa;
     border-radius: 5px;
+    font-size: 1em;
 }
 
 #btn-dialog-register {
-    background-color: #4CAF50;
+    background-color: #2d6a39;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 #btn-dialog-register:hover {
-    background-color: #45a049;
+    background-color: #249031;
+    transform: translateY(-2px);
+}
+
+dialog {
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    width: 100%;
+    background-color: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #dialog-fechar {
-    background-color: #ff5e57;
-    color: white;
+    color: black;
     border: none;
     padding: 5px 10px;
     position: absolute;
@@ -113,6 +131,7 @@ input, select {
 
 #dialog-fechar:hover {
     background-color: #ff4a42;
+    color: white;
 }
 
 #alerta-ponto-registrado {
@@ -120,10 +139,15 @@ input, select {
     bottom: 20px;
     right: 20px;
     padding: 15px 20px;
-    background-color: #4CAF50;
+    background-color: #28a745;
     color: white;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.registro-passado {
+    background-color: #9C27B0;
 }
 
 .pontos-registrados ul {
@@ -133,8 +157,8 @@ input, select {
 .pontos-registrados li {
     background-color: #eee;
     margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 12px;
+    border-radius: 8px;
     transition: background-color 0.3s;
 }
 
@@ -142,10 +166,7 @@ input, select {
     background-color: #ddd;
 }
 
-.registro-passado {
-    background-color: #9C27B0;
-    color: white;
-}
+
 
 .hidden {
     display: none;
@@ -153,4 +174,17 @@ input, select {
 
 .show {
     display: block;
+}
+
+footer {
+    background-color: #3b7e4a;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1em;
 }
