@@ -136,11 +136,11 @@ function showSuccessAlert() {
 }
 
 async function createRegister(registerType, registerDate) {
-  const location = await getUserLocation();
+  // const location = await getUserLocation();
   const register = {
-    date: registerDate || getCurrentDate(), //tbm usa a data de registro
+    date: registerDate || getCurrentDate(), 
     time: getCurrentTime(),
-    location,
+    // location,
     id: Date.now(), // Use timestamp as unique ID
     type: registerType,
   };
