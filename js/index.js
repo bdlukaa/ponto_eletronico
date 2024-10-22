@@ -96,7 +96,8 @@ function setRegisterType() {
   console.log(`Set register type to: ${selectRegisterType.value}`);
 }
 
-async function handleRegister() {
+async function handleRegister(event) {
+  event.preventDefault();
   //cria obj a partir do valor do campo selecionado
   const selectedDate = new Date(registerDateInput.value);
   const currentDate = new Date();
