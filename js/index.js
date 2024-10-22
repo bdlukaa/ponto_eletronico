@@ -75,7 +75,7 @@ function getWeekDay() {
 function setMaxDate() {
   //representa data e hora atuais
   const today = new Date();
-  
+
   //converte data atual p/ string
   const maxDate = today.toISOString().split("T")[0]; // índice 0 indica data no formato YYYY-MM-DD
   registerDateInput.setAttribute("max", maxDate);
@@ -102,13 +102,16 @@ async function handleRegister(event) {
   const selectedDate = new Date(registerDateInput.value);
   const currentDate = new Date();
 
-  if (selectedDate > currentDate){
+  if (selectedDate > currentDate) {
     alert("Não é possível registrar ponto em datas futuras!");
     return;
   }
 
   try {
-    const register = await createRegister(selectRegisterType.value, registerDateInput.value);
+    const register = await createRegister(
+      selectRegisterType.value,
+      registerDateInput.value
+    );
     saveRegisterLocalStorage(register);
     localStorage.setItem(LAST_REGISTER_KEY, JSON.stringify(register));
     console.log("Register saved to localStorage:", register);
@@ -118,6 +121,8 @@ async function handleRegister(event) {
   } catch (error) {
     console.error("Error during registration:", error);
   }
+
+  updateContent();
 }
 
 function showSuccessAlert() {
@@ -191,7 +196,7 @@ function displayRegisteredPoints() {
     //converte p/ uma string compatível para comparação de datas
     const registerDate = new Date(register.date.split("/").reverse().join("-")); // Converte para formato Date
 
-    if (registerDate < currentDate){
+    if (registerDate < currentDate) {
       listItem.classList.add("registro-passado");
     }
 
@@ -222,6 +227,9 @@ function getUserLocation() {
 }
 
 // Initial Updates
-updateContentHour();
-setInterval(updateContentHour, 1000);
-displayRegisteredPoints();
+function updateContent() {
+  updateContentHour();
+  setInterval(updateContentHour, 1000);
+  displayRegisteredPoints();
+}
+updateContent();
