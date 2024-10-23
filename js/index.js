@@ -145,7 +145,7 @@ async function createRegister(registerType, registerDate, registerObservation) {
     // location,
     id: Date.now(), // Use timestamp as unique ID
     type: registerType,
-    observation: registerObservation, //adicionando obs
+    obs: registerObservation, //adicionando obs
   };
   console.log("Created register:", register);
   return register;
@@ -205,7 +205,7 @@ function displayRegisteredPoints() {
 
     if (register.observation){
       listItem.classList.add("registro-com-observacao");
-      listItem.textContent = `${register.date} | ${register.time} | ${register.type} | Observação: ${register.observation}`;
+      listItem.textContent = `${register.date} | ${register.time} | ${register.type} | Obs: ${register.observation}`;
     }
     
     else {
