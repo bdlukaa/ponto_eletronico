@@ -98,6 +98,7 @@ function setRegisterType() {
 
 async function handleRegister(event) {
   event.preventDefault();
+  
   //cria obj a partir do valor do campo selecionado
   const selectedDate = new Date(registerDateInput.value);
   const currentDate = new Date();
@@ -110,7 +111,8 @@ async function handleRegister(event) {
   try {
     const register = await createRegister(
       selectRegisterType.value,
-      registerDateInput.value
+      registerDateInput.value,
+      document.getElementById("register-observation").value //captura obs
     );
     saveRegisterLocalStorage(register);
     localStorage.setItem(LAST_REGISTER_KEY, JSON.stringify(register));
@@ -135,7 +137,7 @@ function showSuccessAlert() {
   }, 5000);
 }
 
-async function createRegister(registerType, registerDate) {
+async function createRegister(registerType, registerDate, registerObservation) {
   // const location = await getUserLocation();
   const register = {
     date: registerDate || getCurrentDate(), 
@@ -143,6 +145,7 @@ async function createRegister(registerType, registerDate) {
     // location,
     id: Date.now(), // Use timestamp as unique ID
     type: registerType,
+    observation: registerObservation, //adicionando obs
   };
   console.log("Created register:", register);
   return register;
@@ -198,11 +201,17 @@ function displayRegisteredPoints() {
 
     if (registerDate < currentDate) {
       listItem.classList.add("registro-passado");
-    } else {
-      listItem.classList.add("pontos-registrados");
     }
 
-    listItem.textContent = `${register.date} | ${register.time} | ${register.type}`;
+    if (register.observation){
+      listItem.classList.add("registro-com-observacao");
+      listItem.textContent = `${register.date} | ${register.time} | ${register.type} | Observação: ${register.observation}`;
+    }
+    
+    else {
+      listItem.classList.add("pontos-registrados");
+      listItem.textContent = `${register.date} | ${register.time} | ${register.type}`;
+    }
     pontosRegistrados.appendChild(listItem);
     console.log("Displayed registered point:", listItem.textContent);
   });
