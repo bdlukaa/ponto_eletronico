@@ -147,8 +147,11 @@ dialog {
 }
 
 .registro-passado {
-    background-color: #9C27B0;
+    color: black;
+    background-color: #f0e7ff; /* Adicione uma leve cor de fundo para destacar */
+    border-left: 5px solid green; /* Borda à esquerda para destacar ainda mais */
 }
+
 
 .pontos-registrados ul {
     list-style: none;
@@ -189,6 +192,15 @@ footer p {
     font-size: 1em;
 }
 
-.registro-com-observacao{
-    background-color:#3b7e4a;
+.registro-com-observacao {
+    background-color:#444;
+    border: 2px solid green;
+    font-weight: bold;
 }
+
+.registro-atual {
+    background-color: #d4edda; /* Um verde claro para destacar o ponto atual */
+    color: purple; /* Texto em verde escuro */
+    border-left: 5px solid #28a745; /* Uma borda verde para dar ênfase */
+}
+
