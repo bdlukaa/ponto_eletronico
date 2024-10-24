@@ -86,14 +86,21 @@ setupDate();
 
 // Register Handling
 function setRegisterType() {
-  const lastType = localStorage.getItem("lastRegisterType") || "entrada";
+  const lastType = () => {
+    try {
+      return JSON.parse(localStorage.getItem(LAST_REGISTER_KEY)).type;
+    } catch (error) {
+      return "saida";
+    }
+  };
+  console.log(lastType());
   const nextTypeMap = {
     entrada: "intervalo",
     intervalo: "volta-intervalo",
     "volta-intervalo": "saida",
     saida: "entrada",
   };
-  selectRegisterType.value = nextTypeMap[lastType];
+  selectRegisterType.value = nextTypeMap[lastType()];
   console.log(`Set register type to: ${selectRegisterType.value}`);
 }
 
@@ -108,11 +115,7 @@ async function handleRegister(event) {
   }
 
   try {
-    const register = await createRegister(
-      selectRegisterType.value,
-      registerDateInput.value,
-      registerObservationInput.value
-    );
+    const register = await createRegister();
     saveRegisterLocalStorage(register);
     localStorage.setItem(LAST_REGISTER_KEY, JSON.stringify(register));
     console.log("Register saved to localStorage:", register);
@@ -135,14 +138,14 @@ function showSuccessAlert() {
   }, 5000);
 }
 
-async function createRegister(registerType, registerDate, registerObservation) {
+async function createRegister() {
   const register = {
-    registerDate: registerDate || getCurrentDate(),
-    date: getCurrentDate(),
-    time: getCurrentTime(),
     id: Date.now(),
-    type: registerType,
-    obs: registerObservation,
+    registerDate: getCurrentDate(),
+    date: new Date(Date.parse(registerDateInput.value)).toISOString(),
+    time: registerTimeInput.value,
+    type: selectRegisterType.value,
+    obs: registerObservationInput.value,
   };
   console.log("Created register:", register);
   return register;

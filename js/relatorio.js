@@ -30,11 +30,12 @@ function displayRegisteredPoints(filtro = "todos") {
 
   // Filtragem dos registros por período
   const filteredRegisters = registers.filter((register) => {
-    const registerDate = new Date(register.date.split("/").reverse().join("-"));
     if (filtro === "ultima-semana") {
-      return currentDate - registerDate <= 7 * 24 * 60 * 60 * 1000;
+      return currentDate - Date.parse(register.date) <= 7 * 24 * 60 * 60 * 1000;
     } else if (filtro === "ultimo-mes") {
-      return currentDate - registerDate <= 30 * 24 * 60 * 60 * 1000;
+      return (
+        currentDate - Date.parse(register.date) <= 30 * 24 * 60 * 60 * 1000
+      );
     }
     return true; // Sem filtro
   });
@@ -42,7 +43,7 @@ function displayRegisteredPoints(filtro = "todos") {
   // Agrupando por data
   const groupedRegisters = {};
   filteredRegisters.forEach((register) => {
-    const date = register.date;
+    const date = new Date(register.date).toLocaleDateString("pt-BR");
     if (!groupedRegisters[date]) {
       groupedRegisters[date] = [];
     }
@@ -63,8 +64,7 @@ function displayRegisteredPoints(filtro = "todos") {
       const registerDate = new Date(
         register.registerDate.split("/").reverse().join("-")
       );
-      const date = new Date(register.date.split("/").reverse().join("-"));
-      if (registerDate < date) {
+      if (registerDate < Date.parse(register.date)) {
         listItem.classList.add("registro-passado");
       }
       if (register.edited) {
@@ -73,7 +73,8 @@ function displayRegisteredPoints(filtro = "todos") {
 
       const type =
         register.type.charAt(0).toUpperCase() + register.type.slice(1);
-      listItem.textContent = `${type} em ${register.date} às ${register.time}`;
+      const date = new Date(register.date).toLocaleDateString("pt-BR");
+      listItem.textContent = `${type} em ${date} às ${register.time}`;
 
       const btnEdit = document.createElement("button");
       btnEdit.textContent = "Editar";
@@ -113,11 +114,8 @@ btnFiltrar.onclick = () => {
 displayRegisteredPoints();
 
 function onEditRegister(register) {
-  registerDateInput.value = new Date(
-    register.date.split("/").reverse().join("-")
-  )
-    .toISOString()
-    .split("T")[0];
+  const date = new Date(register.date).toLocaleDateString("pt-BR");
+  registerDateInput.setAttribute("value", date);
   registerTimeInput.value = register.time;
   selectRegisterType.value = register.type;
   registerObservationInput.value = register.obs;
@@ -126,14 +124,13 @@ function onEditRegister(register) {
 
   btnDialogRegister.onclick = (event) => {
     const registers = getRegisterLocalStorage(REGISTER_KEY);
-    const registerIndex = registers.findIndex(
-      (reg) => reg.date === register.date && reg.time === register.time
-    );
+    const registerIndex = registers.findIndex((reg) => reg.id === register.id);
     console.log(registerIndex);
 
     registers[registerIndex] = {
+      id: register.id,
       registerDate: register.registerDate,
-      date: registerDateInput.value,
+      date: Date.parse(registerDateInput.value),
       time: registerTimeInput.value,
       type: selectRegisterType.value,
       obs: registerObservationInput.value,
