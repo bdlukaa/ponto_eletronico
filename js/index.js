@@ -159,7 +159,7 @@ function register() {
   );
 
   if (lastRegister) {
-    dialogUltimoRegistro.textContent = `Último Registro: ${lastRegister.date} | ${lastRegister.time} | ${lastRegister.type}`;
+    dialogUltimoRegistro.textContent = `Último Registro: ${lastRegister.date} às ${lastRegister.time} - ${lastRegister.type}`;
     console.log("Last register displayed:", lastRegister);
   } else {
     console.log("No last register found.");
