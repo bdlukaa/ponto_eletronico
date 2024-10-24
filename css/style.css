@@ -146,13 +146,6 @@ dialog {
     z-index: 1000;
 }
 
-.registro-passado {
-    color: black;
-    background-color: #f0e7ff; /* Adicione uma leve cor de fundo para destacar */
-    border-left: 5px solid green; /* Borda à esquerda para destacar ainda mais */
-}
-
-
 .pontos-registrados ul {
     list-style: none;
 }
@@ -169,7 +162,9 @@ dialog {
     background-color: #ddd;
 }
 
-
+.registro-passado {
+    border-left: 5px solid green;
+}
 
 .hidden {
     display: none;

@@ -140,7 +140,8 @@ function showSuccessAlert() {
 async function createRegister(registerType, registerDate, registerObservation) {
   // const location = await getUserLocation();
   const register = {
-    date: registerDate || getCurrentDate(), 
+    registerDate: registerDate,
+    date: getCurrentDate(), 
     time: getCurrentTime(),
     // location,
     id: Date.now(), // Use timestamp as unique ID
@@ -197,9 +198,9 @@ function displayRegisteredPoints() {
   registers.forEach((register) => {
     const listItem = document.createElement("li");
     //converte p/ uma string compatível para comparação de datas
-    const registerDate = new Date(register.date.split("/").reverse().join("-")); // Converte para formato Date
-
-    if (registerDate < currentDate) {
+    const registerDate = new Date(register.registerDate.split("/").reverse().join("-"));
+    const date = new Date(register.date.split("/").reverse().join("-")); 
+    if (registerDate < date) {
       listItem.classList.add("registro-passado");
     }
 
