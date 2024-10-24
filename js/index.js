@@ -116,6 +116,17 @@ async function handleRegister(event) {
 
   try {
     const register = await createRegister();
+
+    if(register.arquivo){
+      const reader = new FileReader(); //lê conteúdo do arquivo
+      //"e" é o obj q contém infos sobre a leitura
+      reader.onload = function(e) {
+        //armazena conteúdo do arquivo
+        const arquivoContent = e.target.result;
+        console.log("Arquivo lido:", arquivoContent);
+      };
+      reader.readAsDataURL(register.arquivo); //p/ arquivos de img ou texto
+    }
     saveRegisterLocalStorage(register);
     localStorage.setItem(LAST_REGISTER_KEY, JSON.stringify(register));
     console.log("Register saved to localStorage:", register);
@@ -146,6 +157,8 @@ async function createRegister() {
     time: registerTimeInput.value,
     type: selectRegisterType.value,
     obs: registerObservationInput.value,
+    justificativa: document.getElementById("justificativa").value,
+    arquivo: document.getElementById("upload-arquivo").files[0], //armazena o arquivo
   };
   console.log("Created register:", register);
   return register;
