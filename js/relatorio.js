@@ -67,14 +67,19 @@ function displayRegisteredPoints(filtro = "todos") {
       if (registerDate < date) {
         listItem.classList.add("registro-passado");
       }
+      if (register.edited) {
+        listItem.classList.add("registro-editado");
+      }
 
-      listItem.textContent = `${register.type} em ${register.date} às ${register.time}`;
+      const type =
+        register.type.charAt(0).toUpperCase() + register.type.slice(1);
+      listItem.textContent = `${type} em ${register.date} às ${register.time}`;
 
       const btnEdit = document.createElement("button");
       btnEdit.textContent = "Editar";
       btnEdit.classList.add("editar");
       btnEdit.onclick = () => {
-        dialogPonto.showModal();
+        onEditRegister(register);
       };
       listItem.appendChild(btnEdit);
 
@@ -106,3 +111,38 @@ btnFiltrar.onclick = () => {
 
 // Inicializa a exibição
 displayRegisteredPoints();
+
+function onEditRegister(register) {
+  registerDateInput.value = new Date(
+    register.date.split("/").reverse().join("-")
+  )
+    .toISOString()
+    .split("T")[0];
+  registerTimeInput.value = register.time;
+  selectRegisterType.value = register.type;
+  registerObservationInput.value = register.obs;
+
+  dialogPonto.showModal();
+
+  btnDialogRegister.onclick = (event) => {
+    const registers = getRegisterLocalStorage(REGISTER_KEY);
+    const registerIndex = registers.findIndex(
+      (reg) => reg.date === register.date && reg.time === register.time
+    );
+    console.log(registerIndex);
+
+    registers[registerIndex] = {
+      registerDate: register.registerDate,
+      date: registerDateInput.value,
+      time: registerTimeInput.value,
+      type: selectRegisterType.value,
+      obs: registerObservationInput.value,
+      edited: true,
+      editDate: new Date().toISOString().split("T")[0],
+    };
+
+    localStorage.setItem(REGISTER_KEY, JSON.stringify(registers));
+    displayRegisteredPoints();
+    dialogPonto.close();
+  };
+}

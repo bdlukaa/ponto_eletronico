@@ -94,15 +94,14 @@ h2 {
   content: "Passado";
 }
 
-.registro-com-observacao {
-  background-color: #444;
-  border-bottom: 2px solid green;
-  border-left: 2px solid green;
-  font-weight: 500;
+.registro-editado {
+  border-right: 2px solid #007bff;
+  border-bottom: 2px solid #007bff;
 }
 
-.registro-com-observacao::before {
-  content: "Observação";
+.registro-editado::before {
+  content: "Editado";
+  background-color: #007bff;
 }
 
 .header-relatorio {

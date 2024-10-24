@@ -43,23 +43,6 @@ main {
   color: #444;
 }
 
-.highlight-button {
-  background-color: #2d6a39;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 1.2em;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  width: 100%;
-}
-
-.highlight-button:hover {
-  background-color: #249031;
-  transform: translateY(-2px);
-}
-
 #alerta-ponto-registrado {
   position: fixed;
   bottom: 20px;
