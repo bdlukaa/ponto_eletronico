@@ -13,6 +13,8 @@ const registerTimeInput = document.getElementById("register-time");
 const registerObservationInput = document.getElementById(
   "register-observation"
 );
+const userLocationElement = document.getElementById("user-location");
+const userMapElement = document.getElementById("user-map");
 
 const REGISTER_KEY = "register";
 const LAST_REGISTER_KEY = "lastRegister";
@@ -146,7 +148,7 @@ async function createRegister(registerType, registerDate, registerObservation) {
   return register;
 }
 
-function register() {
+async function register() {
   const lastRegister = JSON.parse(localStorage.getItem(LAST_REGISTER_KEY));
   const dialogUltimoRegistro = document.getElementById(
     "dialog-ultimo-registro"
@@ -167,6 +169,24 @@ function register() {
 
   dialogPonto.showModal();
   console.log("Dialog for registering points shown.");
+
+  userLocationElement.textContent = "Carregando localização...";
+  try {
+    const location = await getUserLocation();
+    userLocationElement.textContent = `Localização: ${location.latitude.toFixed(
+      4
+    )}, ${location.longitude.toFixed(4)}`;
+
+    userMapElement.style.height = "200px";
+    userMapElement.src = `https://www.openstreetmap.org/export/embed.html?bbox=${
+      location.longitude - 0.005
+    },${location.latitude - 0.005},${location.longitude + 0.005},${
+      location.latitude + 0.005
+    }&layer=mapnik&marker=${location.latitude},${location.longitude}`;
+  } catch (error) {
+    userLocationElement.textContent = "Localização não disponível.";
+    userMapElement.src = ""; // Clear the map if location is not available
+  }
 }
 
 // LocalStorage Handling
