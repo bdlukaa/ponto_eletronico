@@ -19,7 +19,9 @@
       </section>
 
       <section class="registro-ponto">
-        <button id="btn-registrar-ponto">Registrar ponto</button>
+        <button id="btn-registrar-ponto" class="highlight-button">
+          Registrar ponto
+        </button>
 
         <dialog id="dialog-ponto">
           <form id="form-ponto">
@@ -43,12 +45,17 @@
               ></textarea>
             </div>
 
-            <button type="submit" id="btn-dialog-register">Registrar</button>
+            <button
+              type="submit"
+              id="btn-dialog-register"
+              class="highlight-button"
+            >
+              Registrar
+            </button>
           </form>
 
           <p id="dialog-ultimo-registro"></p>
           <button id="dialog-fechar">x</button>
-          
         </dialog>
       </section>
 
@@ -56,9 +63,14 @@
         <p>Ponto registrado com sucesso!</p>
       </div>
 
-      <section class="pontos-registrados">
-        <h2>Pontos Registrados</h2>
-        <ul id="lista-pontos-registrados"></ul>
+      <section class="redirect-section">
+        <button
+          id="btn-redirect"
+          onclick="window.location.href='html/relatorio.html'"
+          class="highlight-button"
+        >
+          Ver Relatório
+        </button>
       </section>
     </main>
 

@@ -8,7 +8,6 @@ const selectRegisterType = document.getElementById("register-type");
 const btnDialogRegister = document.getElementById("btn-dialog-register");
 const btnDialogFechar = document.getElementById("dialog-fechar");
 const alertaSucesso = document.getElementById("alerta-ponto-registrado");
-const pontosRegistrados = document.getElementById("lista-pontos-registrados");
 //entrada de dados
 const registerDateInput = document.getElementById("register-date");
 const registerTimeInput = document.getElementById("register-time");
@@ -200,34 +199,7 @@ function getRegisterLocalStorage(key) {
   return registers;
 }
 
-// Display Registered Points
-function displayRegisteredPoints() {
-  pontosRegistrados.innerHTML = "";
-  const registers = getRegisterLocalStorage(REGISTER_KEY);
-  const currentDate = new Date();
 
-  registers.forEach((register) => {
-    const listItem = document.createElement("li");
-    //converte p/ uma string compatível para comparação de datas
-    const registerDate = new Date(
-      register.registerDate.split("/").reverse().join("-")
-    );
-    const date = new Date(register.date.split("/").reverse().join("-"));
-    if (registerDate < date) {
-      listItem.classList.add("registro-passado");
-    }
-
-    listItem.classList.add("pontos-registrados");
-    listItem.textContent = `${register.type} em ${register.date} às ${register.time}`;
-
-    if (register.obs) {
-      listItem.classList.add("registro-com-observacao");
-      listItem.textContent = `${listItem.textContent} - ${register.obs}`;
-    }
-    pontosRegistrados.appendChild(listItem);
-    console.log("Displayed registered point:", listItem.textContent);
-  });
-}
 
 // Geolocation
 function getUserLocation() {
@@ -253,6 +225,5 @@ function getUserLocation() {
 function updateContent() {
   updateContentHour();
   setInterval(updateContentHour, 1000);
-  displayRegisteredPoints();
 }
 updateContent();
