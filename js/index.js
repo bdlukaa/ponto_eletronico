@@ -4,8 +4,6 @@ const dataAtual = document.getElementById("data-atual");
 const horaAtual = document.getElementById("hora-atual");
 const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
 const dialogPonto = document.getElementById("dialog-ponto");
-const dialogData = document.getElementById("dialog-data");
-const dialogHora = document.getElementById("dialog-hora");
 const selectRegisterType = document.getElementById("register-type");
 const btnDialogRegister = document.getElementById("btn-dialog-register");
 const btnDialogFechar = document.getElementById("dialog-fechar");
@@ -13,6 +11,7 @@ const alertaSucesso = document.getElementById("alerta-ponto-registrado");
 const pontosRegistrados = document.getElementById("lista-pontos-registrados");
 //entrada de dados
 const registerDateInput = document.getElementById("register-date");
+const registerTimeInput = document.getElementById("register-time");
 
 const REGISTER_KEY = "register";
 const LAST_REGISTER_KEY = "lastRegister";
@@ -20,7 +19,6 @@ const LAST_REGISTER_KEY = "lastRegister";
 // Initialize Display
 diaSemana.textContent = getWeekDay();
 dataAtual.textContent = getCurrentDate();
-dialogData.textContent = `Data: ${getCurrentDate()}`;
 
 // Event Listeners
 btnRegistrarPonto.addEventListener("click", () => {
@@ -32,6 +30,10 @@ btnDialogFechar.addEventListener("click", () => {
   console.log("Closing dialog.");
   dialogPonto.close();
 });
+dialogPonto.onclose = () => {
+  hasChangedTime = false;
+  console.log("Dialog closed.");
+};
 
 // Utility Functions
 function updateContentHour() {
@@ -72,16 +74,22 @@ function getWeekDay() {
   return weekDay;
 }
 
-function setMaxDate() {
-  //representa data e hora atuais
+let hasChangedTime = false;
+function setupDate() {
   const today = new Date();
-
   //converte data atual p/ string
   const maxDate = today.toISOString().split("T")[0]; // índice 0 indica data no formato YYYY-MM-DD
   registerDateInput.setAttribute("max", maxDate);
+  registerDateInput.setAttribute("value", maxDate); // também é hoje
+
+  registerTimeInput.setAttribute("value", getCurrentTime());
+  registerTimeInput.oninput = () => {
+    console.log("Time has been changed.");
+    hasChangedTime = true;
+  };
 }
 
-setMaxDate();
+setupDate();
 
 // Register Handling
 function setRegisterType() {
@@ -98,7 +106,7 @@ function setRegisterType() {
 
 async function handleRegister(event) {
   event.preventDefault();
-  
+
   //cria obj a partir do valor do campo selecionado
   const selectedDate = new Date(registerDateInput.value);
   const currentDate = new Date();
@@ -138,15 +146,14 @@ function showSuccessAlert() {
 }
 
 async function createRegister(registerType, registerDate, registerObservation) {
-  // const location = await getUserLocation();
   const register = {
-    registerDate: registerDate,
-    date: getCurrentDate(), 
+    registerDate: registerDate || getCurrentDate(),
+    date: getCurrentDate(),
     time: getCurrentTime(),
     // location,
-    id: Date.now(), // Use timestamp as unique ID
+    id: Date.now(),
     type: registerType,
-    obs: registerObservation, //adicionando obs
+    obs: registerObservation,
   };
   console.log("Created register:", register);
   return register;
@@ -165,9 +172,10 @@ function register() {
     console.log("No last register found.");
   }
 
-  dialogHora.textContent = `Hora: ${getCurrentTime()}`;
   setInterval(() => {
-    dialogHora.textContent = `Hora: ${getCurrentTime()}`;
+    if (!hasChangedTime) {
+      registerTimeInput.value = getCurrentTime();
+    }
   }, 1000);
 
   dialogPonto.showModal();
@@ -198,18 +206,18 @@ function displayRegisteredPoints() {
   registers.forEach((register) => {
     const listItem = document.createElement("li");
     //converte p/ uma string compatível para comparação de datas
-    const registerDate = new Date(register.registerDate.split("/").reverse().join("-"));
-    const date = new Date(register.date.split("/").reverse().join("-")); 
+    const registerDate = new Date(
+      register.registerDate.split("/").reverse().join("-")
+    );
+    const date = new Date(register.date.split("/").reverse().join("-"));
     if (registerDate < date) {
       listItem.classList.add("registro-passado");
     }
 
-    if (register.observation){
+    if (register.observation) {
       listItem.classList.add("registro-com-observacao");
       listItem.textContent = `${register.date} | ${register.time} | ${register.type} | Obs: ${register.observation}`;
-    }
-    
-    else {
+    } else {
       listItem.classList.add("pontos-registrados");
       listItem.textContent = `${register.date} | ${register.time} | ${register.type}`;
     }
