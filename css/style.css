@@ -164,7 +164,8 @@ dialog {
 }
 
 .registro-passado {
-    border-left: 5px solid green;
+    border-right: 2px solid green;
+    border-bottom: 2px solid green;
 }
 
 .hidden {
@@ -190,14 +191,10 @@ footer p {
 
 .registro-com-observacao {
     background-color:#444;
-    border: 2px solid green;
-    font-weight: bold;
-}
-
-.registro-atual {
-    background-color: #d4edda; /* Um verde claro para destacar o ponto atual */
-    color: purple; /* Texto em verde escuro */
-    border-left: 5px solid #28a745; /* Uma borda verde para dar ênfase */
+    border: 2px solid transparent;
+    border-bottom: 2px solid green;
+    border-left: 2px solid green;
+    font-weight: 500;
 }
 
 #register-observation {

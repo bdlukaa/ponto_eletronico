@@ -12,6 +12,9 @@ const pontosRegistrados = document.getElementById("lista-pontos-registrados");
 //entrada de dados
 const registerDateInput = document.getElementById("register-date");
 const registerTimeInput = document.getElementById("register-time");
+const registerObservationInput = document.getElementById(
+  "register-observation"
+);
 
 const REGISTER_KEY = "register";
 const LAST_REGISTER_KEY = "lastRegister";
@@ -120,7 +123,7 @@ async function handleRegister(event) {
     const register = await createRegister(
       selectRegisterType.value,
       registerDateInput.value,
-      document.getElementById("register-observation").value //captura obs
+      registerObservationInput.value
     );
     saveRegisterLocalStorage(register);
     localStorage.setItem(LAST_REGISTER_KEY, JSON.stringify(register));
@@ -214,12 +217,12 @@ function displayRegisteredPoints() {
       listItem.classList.add("registro-passado");
     }
 
-    if (register.observation) {
+    listItem.classList.add("pontos-registrados");
+    listItem.textContent = `${register.type} em ${register.date} às ${register.time}`;
+
+    if (register.obs) {
       listItem.classList.add("registro-com-observacao");
-      listItem.textContent = `${register.date} | ${register.time} | ${register.type} | Obs: ${register.observation}`;
-    } else {
-      listItem.classList.add("pontos-registrados");
-      listItem.textContent = `${register.date} | ${register.time} | ${register.type}`;
+      listItem.textContent = `${listItem.textContent} - ${register.obs}`;
     }
     pontosRegistrados.appendChild(listItem);
     console.log("Displayed registered point:", listItem.textContent);
