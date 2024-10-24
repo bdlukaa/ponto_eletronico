@@ -1,3 +1,15 @@
+// Dialog
+const dialogPonto = document.getElementById("dialog-ponto");
+const selectRegisterType = document.getElementById("register-type");
+const btnDialogRegister = document.getElementById("btn-dialog-register");
+const btnDialogFechar = document.getElementById("dialog-fechar");
+const registerDateInput = document.getElementById("register-date");
+const registerTimeInput = document.getElementById("register-time");
+const registerObservationInput = document.getElementById(
+  "register-observation"
+);
+
+// Lista
 const pontosRegistrados = document.getElementById("lista-pontos-registrados");
 const filtroPeriodo = document.getElementById("filtro-periodo");
 const btnFiltrar = document.getElementById("btn-filtrar");
@@ -62,12 +74,7 @@ function displayRegisteredPoints(filtro = "todos") {
       btnEdit.textContent = "Editar";
       btnEdit.classList.add("editar");
       btnEdit.onclick = () => {
-        const newType = prompt("Digite o novo tipo:", register.type);
-        if (newType !== null) {
-          register.type = newType;
-          localStorage.setItem(REGISTER_KEY, JSON.stringify(registers));
-          displayRegisteredPoints(filtroPeriodo.value);
-        }
+        dialogPonto.showModal();
       };
       listItem.appendChild(btnEdit);
 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Relatório de pontos</title>
     <link rel="stylesheet" href="../css/relatorio.css" />
+    <link rel="stylesheet" href="../css/dialog.css" />
   </head>
   <body>
     <section class="pontos-registrados">
@@ -32,6 +33,36 @@
 
       <ul id="lista-pontos-registrados"></ul>
     </section>
+
+    <dialog id="dialog-ponto">
+      <form id="form-ponto">
+        <label for="register-date">Data do Registro:</label>
+        <input type="date" id="register-date" max="" />
+        <input type="time" id="register-time" max="" />
+        <label for="register-type">Tipo de Registro:</label>
+        <select name="register-type" id="register-type">
+          <option value="entrada">Entrada</option>
+          <option value="intervalo">Intervalo</option>
+          <option value="volta-intervalo">Volta Intervalo</option>
+          <option value="saida">Saída</option>
+        </select>
+
+        <div>
+          <textarea
+            id="register-observation"
+            rows="5"
+            placeholder="Digite uma observação:"
+          ></textarea>
+        </div>
+
+        <button type="submit" id="btn-dialog-register" class="highlight-button">
+          Registrar
+        </button>
+      </form>
+
+      <p id="dialog-ultimo-registro"></p>
+      <button id="dialog-fechar" onclick="dialogPonto.close()">x</button>
+    </dialog>
 
     <footer>
       <p>

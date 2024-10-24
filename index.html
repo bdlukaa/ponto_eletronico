@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sistema de Ponto Eletrônico</title>
     <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/dialog.css" />
   </head>
   <body>
     <header>
@@ -42,7 +43,6 @@
               <option value="volta-intervalo">Volta Intervalo</option>
               <option value="saida">Saída</option>
             </select>
-            <!--adicionando o campo da observação-->
 
             <div>
               <textarea
@@ -62,7 +62,7 @@
           </form>
 
           <p id="dialog-ultimo-registro"></p>
-          <button id="dialog-fechar">x</button>
+          <button id="dialog-fechar" onclick="dialogPonto.close()">x</button>
         </dialog>
       </section>
 

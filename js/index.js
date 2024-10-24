@@ -3,12 +3,12 @@ const diaSemana = document.getElementById("dia-semana");
 const dataAtual = document.getElementById("data-atual");
 const horaAtual = document.getElementById("hora-atual");
 const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
+const alertaSucesso = document.getElementById("alerta-ponto-registrado");
+// Dialog
 const dialogPonto = document.getElementById("dialog-ponto");
 const selectRegisterType = document.getElementById("register-type");
 const btnDialogRegister = document.getElementById("btn-dialog-register");
 const btnDialogFechar = document.getElementById("dialog-fechar");
-const alertaSucesso = document.getElementById("alerta-ponto-registrado");
-//entrada de dados
 const registerDateInput = document.getElementById("register-date");
 const registerTimeInput = document.getElementById("register-time");
 const registerObservationInput = document.getElementById(
@@ -28,10 +28,6 @@ btnRegistrarPonto.addEventListener("click", () => {
   register();
 });
 btnDialogRegister.addEventListener("click", handleRegister);
-btnDialogFechar.addEventListener("click", () => {
-  console.log("Closing dialog.");
-  dialogPonto.close();
-});
 dialogPonto.onclose = () => {
   hasChangedTime = false;
   console.log("Dialog closed.");
