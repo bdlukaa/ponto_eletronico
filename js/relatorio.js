@@ -97,6 +97,21 @@ function displayRegisteredPoints(filtro = "todos") {
         obs.textContent = `Observação: ${register.obs}`;
         listItem.appendChild(obs);
         listItem.classList.add("registro-com-observacao");
+
+          // justificativa 
+      if (register.justificativa) {
+        const justificativa = document.createElement("p");
+        justificativa.textContent = `Justificativa: ${register.justificativa}`;
+        listItem.appendChild(justificativa);
+      }
+
+      if (register.arquivo) {
+        const link = document.createElement("a");
+        link.href = register.arquivo; // URL do arquivo
+        link.textContent = "Download do arquivo";
+        link.target = "_blank"; // Abre o link em uma nova aba
+        listItem.appendChild(link);
+      }
       }
 
       pontosRegistrados.appendChild(listItem);
