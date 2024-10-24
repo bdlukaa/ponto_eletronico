@@ -4,7 +4,6 @@ const dataAtual = document.getElementById("data-atual");
 const horaAtual = document.getElementById("hora-atual");
 const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
 const alertaSucesso = document.getElementById("alerta-ponto-registrado");
-// Dialog
 const dialogPonto = document.getElementById("dialog-ponto");
 const selectRegisterType = document.getElementById("register-type");
 const btnDialogRegister = document.getElementById("btn-dialog-register");
@@ -18,9 +17,13 @@ const registerObservationInput = document.getElementById(
 const REGISTER_KEY = "register";
 const LAST_REGISTER_KEY = "lastRegister";
 
-// Initialize Display
-diaSemana.textContent = getWeekDay();
-dataAtual.textContent = getCurrentDate();
+let hasChangedTime = false;
+
+function initializeDisplay() {
+  diaSemana.textContent = getWeekDay();
+  dataAtual.textContent = getCurrentDate();
+}
+initializeDisplay();
 
 // Event Listeners
 btnRegistrarPonto.addEventListener("click", () => {
@@ -36,29 +39,24 @@ dialogPonto.onclose = () => {
 // Utility Functions
 function updateContentHour() {
   horaAtual.textContent = getCurrentTime();
-  // console.log(`Updated hour: ${horaAtual.textContent}`);
 }
 
 function getCurrentTime() {
   const date = new Date();
-  const currentTime = `${String(date.getHours()).padStart(2, "0")}:${String(
+  return `${String(date.getHours()).padStart(2, "0")}:${String(
     date.getMinutes()
   ).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
-  // console.log(`Current time: ${currentTime}`);
-  return currentTime;
 }
 
 function getCurrentDate() {
   const date = new Date();
-  const currentDate = `${String(date.getDate()).padStart(2, "0")}/${String(
+  return `${String(date.getDate()).padStart(2, "0")}/${String(
     date.getMonth() + 1
   ).padStart(2, "0")}/${date.getFullYear()}`;
-  // console.log(`Current date: ${currentDate}`);
-  return currentDate;
 }
 
 function getWeekDay() {
-  const daynames = [
+  const dayNames = [
     "Domingo",
     "Segunda-feira",
     "Terça-feira",
@@ -67,26 +65,21 @@ function getWeekDay() {
     "Sexta-feira",
     "Sábado",
   ];
-  const weekDay = daynames[new Date().getDay()];
-  // console.log(`Week day: ${weekDay}`);
-  return weekDay;
+  return dayNames[new Date().getDay()];
 }
 
-let hasChangedTime = false;
+// Setup Date Inputs
 function setupDate() {
   const today = new Date();
-  //converte data atual p/ string
-  const maxDate = today.toISOString().split("T")[0]; // índice 0 indica data no formato YYYY-MM-DD
+  const maxDate = today.toISOString().split("T")[0];
   registerDateInput.setAttribute("max", maxDate);
-  registerDateInput.setAttribute("value", maxDate); // também é hoje
-
+  registerDateInput.setAttribute("value", maxDate);
   registerTimeInput.setAttribute("value", getCurrentTime());
+
   registerTimeInput.oninput = () => {
-    console.log("Time has been changed.");
     hasChangedTime = true;
   };
 }
-
 setupDate();
 
 // Register Handling
@@ -104,8 +97,6 @@ function setRegisterType() {
 
 async function handleRegister(event) {
   event.preventDefault();
-
-  //cria obj a partir do valor do campo selecionado
   const selectedDate = new Date(registerDateInput.value);
   const currentDate = new Date();
 
@@ -123,7 +114,6 @@ async function handleRegister(event) {
     saveRegisterLocalStorage(register);
     localStorage.setItem(LAST_REGISTER_KEY, JSON.stringify(register));
     console.log("Register saved to localStorage:", register);
-
     showSuccessAlert();
     dialogPonto.close();
   } catch (error) {
@@ -148,7 +138,6 @@ async function createRegister(registerType, registerDate, registerObservation) {
     registerDate: registerDate || getCurrentDate(),
     date: getCurrentDate(),
     time: getCurrentTime(),
-    // location,
     id: Date.now(),
     type: registerType,
     obs: registerObservation,
@@ -194,8 +183,6 @@ function getRegisterLocalStorage(key) {
   console.log(`Retrieved from localStorage (${key}):`, registers);
   return registers;
 }
-
-
 
 // Geolocation
 function getUserLocation() {
