@@ -185,7 +185,8 @@ async function register() {
     }&layer=mapnik&marker=${location.latitude},${location.longitude}`;
   } catch (error) {
     userLocationElement.textContent = "Localização não disponível.";
-    userMapElement.src = ""; // Clear the map if location is not available
+    userMapElement.src = "";
+    userMapElement.style.height = "0px";
   }
 }
 
