@@ -255,7 +255,12 @@ const justificativaTextArea = document.getElementById("justificativa");
 const btnJustificativaRegister = document.getElementById(
   "btn-justification-register"
 );
+const justificationDateInput = document.getElementById("justification-date");
 registerJustificationButton.addEventListener("click", () => {
+  const today = new Date();
+  const maxDate = today.toISOString().split("T")[0];
+  justificationDateInput.max = maxDate;
+  justificationDateInput.value = maxDate;
   justificativaDialog.showModal();
 });
 

@@ -206,7 +206,7 @@ function onEditRegister(register) {
     new Date(register.date).toISOString().split("T")[0]
   );
   registerDateInput.setAttribute(
-    "min",
+    "max",
     new Date(Date.now()).toISOString().split("T")[0]
   );
   registerTimeInput.value = register.time;
@@ -240,6 +240,7 @@ function onEditRegister(register) {
 const justificationEditDialog = document.getElementById("dialog-edit");
 const justificationEditTextArea = document.getElementById("edit-justification");
 const btnJustificativaEdit = document.getElementById("btn-justification-edit");
+const justificationDate = document.getElementById("justification-date");
 
 function onEditJustification(register) {
   justificationEditTextArea.value = register.obs;
@@ -260,5 +261,15 @@ function onEditJustification(register) {
     displayRegisteredPoints();
     justificationEditDialog.close();
   };
+
+  justificationDate.setAttribute(
+    "value",
+    new Date(register.date).toISOString().split("T")[0]
+  );
+  justificationDate.setAttribute(
+    "max",
+    new Date(Date.now()).toISOString().split("T")[0]
+  );
+
   justificationEditDialog.showModal();
 }
