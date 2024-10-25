@@ -1,5 +1,6 @@
 dialog {
   padding: 20px;
+  padding-top: 50px;
   border-radius: 8px;
   border: 2px solid #ccc;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -35,7 +36,7 @@ dialog {
   margin-top: 10px;
 }
 
-#register-observation {
+textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #aaa;
@@ -48,25 +49,8 @@ dialog {
   color: #222;
 }
 
-#register-observation:focus {
+textarea:focus {
   border-color: #3b7e4a;
   outline: none;
   box-shadow: 0 0 5px rgba(59, 126, 74, 0.5);
-}
-
-label,
-select,
-input {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  color: #222;
-}
-
-input,
-select {
-  padding: 12px;
-  border: 1px solid #aaa;
-  border-radius: 5px;
-  font-size: 1em;
 }

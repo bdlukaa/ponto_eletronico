@@ -247,3 +247,10 @@ function updateContent() {
   setInterval(updateContentHour, 1000);
 }
 updateContent();
+
+const registerJustificationButton = document.getElementById("btn-registrar-justificativa");
+const justificativaDialog = document.getElementById("dialog-justificativa");
+
+registerJustificationButton.addEventListener("click", () => {
+  justificativaDialog.showModal();
+});
