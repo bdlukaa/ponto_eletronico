@@ -129,8 +129,8 @@ btnFiltrar.onclick = () => {
 displayRegisteredPoints();
 
 function onEditRegister(register) {
-  const date = new Date(register.date).toLocaleDateString("pt-BR");
-  registerDateInput.setAttribute("value", date);
+  registerDateInput.setAttribute("value", new Date(register.date).toISOString().split("T")[0]);
+  registerDateInput.setAttribute("min", new Date(Date.now()).toISOString().split("T")[0]);
   registerTimeInput.value = register.time;
   selectRegisterType.value = register.type;
   registerObservationInput.value = register.obs;
@@ -145,7 +145,7 @@ function onEditRegister(register) {
     registers[registerIndex] = {
       id: register.id,
       registerDate: register.registerDate,
-      date: Date.parse(registerDateInput.value),
+      date: new Date(registerDateInput.value).toISOString(),
       time: registerTimeInput.value,
       type: selectRegisterType.value,
       obs: registerObservationInput.value,
