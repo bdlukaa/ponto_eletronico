@@ -255,6 +255,7 @@ function createJustificativaRegister() {
   const register = {
     id: Date.now(),
     registerDate: getCurrentDate(),
+    date: new Date().toISOString(),
     type: "justificativa",
     obs: justificativaTextArea.value,
   };

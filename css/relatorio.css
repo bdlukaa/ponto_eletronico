@@ -145,6 +145,7 @@ footer p {
 
 .filtro {
   margin-bottom: 20px;
+  display: inline-flex;
 }
 
 .filtro label {
@@ -154,16 +155,18 @@ footer p {
 .filtro select {
   padding: 5px;
   margin-right: 10px;
+  width: 200px;
 }
 
 .filtro button {
-  padding: 5px 10px;
   background-color: #2d6a39;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .filtro button:hover {

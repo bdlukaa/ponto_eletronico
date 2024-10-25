@@ -15,6 +15,7 @@ const filtroPeriodo = document.getElementById("filtro-periodo");
 const btnFiltrar = document.getElementById("btn-filtrar");
 
 const REGISTER_KEY = "register";
+const JUSTIFICATIVAS_KEY = "justifications";
 
 // Função para obter os registros do localStorage
 function getRegisterLocalStorage(key) {
@@ -25,7 +26,10 @@ function getRegisterLocalStorage(key) {
 // Exibir os pontos registrados
 function displayRegisteredPoints(filtro = "todos") {
   pontosRegistrados.innerHTML = "";
-  const registers = getRegisterLocalStorage(REGISTER_KEY);
+  const registers = [
+    ...getRegisterLocalStorage(REGISTER_KEY),
+    ...getRegisterLocalStorage(JUSTIFICATIVAS_KEY),
+  ];
   const currentDate = new Date();
 
   // Filtragem dos registros por período
@@ -44,10 +48,17 @@ function displayRegisteredPoints(filtro = "todos") {
   const groupedRegisters = {};
   filteredRegisters.forEach((register) => {
     const date = new Date(register.date).toLocaleDateString("pt-BR");
-    if (!groupedRegisters[date]) {
-      groupedRegisters[date] = [];
+    if (register.type == "justificativa") {
+      if (!groupedRegisters["Justificativas"]) {
+        groupedRegisters["Justificativas"] = [];
+      }
+      groupedRegisters["Justificativas"].push(register);
+    } else {
+      if (!groupedRegisters[date]) {
+        groupedRegisters[date] = [];
+      }
+      groupedRegisters[date].push(register);
     }
-    groupedRegisters[date].push(register);
   });
 
   // Adiciona os registros ao DOM
@@ -57,66 +68,96 @@ function displayRegisteredPoints(filtro = "todos") {
     pontosRegistrados.appendChild(dateHeader);
 
     groupedRegisters[date].forEach((register) => {
-      const listItem = document.createElement("li");
-      listItem.classList.add("pontos-registrados");
-
-      // Converte para uma string compatível para comparação de datas
-      const registerDate = new Date(
-        register.registerDate.split("/").reverse().join("-")
-      );
-      if (registerDate < Date.parse(register.date)) {
-        listItem.classList.add("registro-passado");
+      if (register.type == "justificativa") {
+        const listItem = createJustificationRegisterItem(register);
+        pontosRegistrados.appendChild(listItem);
+      } else {
+        const listItem = createRegisterItem(register);
+        pontosRegistrados.appendChild(listItem);
       }
-      if (register.edited) {
-        listItem.classList.add("registro-editado");
-      }
-
-      const type =
-        register.type.charAt(0).toUpperCase() + register.type.slice(1);
-      const date = new Date(register.date).toLocaleDateString("pt-BR");
-      listItem.textContent = `${type} em ${date} às ${register.time}`;
-
-      const btnEdit = document.createElement("button");
-      btnEdit.textContent = "Editar";
-      btnEdit.classList.add("editar");
-      btnEdit.onclick = () => {
-        onEditRegister(register);
-      };
-      listItem.appendChild(btnEdit);
-
-      const btnDelete = document.createElement("button");
-      btnDelete.textContent = "Excluir";
-      btnDelete.classList.add("excluir");
-      btnDelete.onclick = () => {
-        alert("Este ponto não pode ser excluído.");
-      };
-      listItem.appendChild(btnDelete);
-
-      if (register.obs) {
-        const obs = document.createElement("p");
-        obs.textContent = `Observação: ${register.obs}`;
-        listItem.appendChild(obs);
-        listItem.classList.add("registro-com-observacao");
-
-          // justificativa 
-      if (register.justificativa) {
-        const justificativa = document.createElement("p");
-        justificativa.textContent = `Justificativa: ${register.justificativa}`;
-        listItem.appendChild(justificativa);
-      }
-
-      if (register.arquivo) {
-        const link = document.createElement("a");
-        link.href = register.arquivo; // URL do arquivo
-        link.textContent = "Download do arquivo";
-        link.target = "_blank"; // Abre o link em uma nova aba
-        listItem.appendChild(link);
-      }
-      }
-
-      pontosRegistrados.appendChild(listItem);
     });
   }
+}
+
+function createRegisterItem(register) {
+  const listItem = document.createElement("li");
+  listItem.classList.add("pontos-registrados");
+
+  // Converte para uma string compatível para comparação de datas
+  const registerDate = new Date(
+    register.registerDate.split("/").reverse().join("-")
+  );
+  if (registerDate < Date.parse(register.date)) {
+    listItem.classList.add("registro-passado");
+  }
+  if (register.edited) {
+    listItem.classList.add("registro-editado");
+  }
+
+  const type = register.type.charAt(0).toUpperCase() + register.type.slice(1);
+  const date = new Date(register.date).toLocaleDateString("pt-BR");
+  listItem.textContent = `${type} em ${date} às ${register.time}`;
+
+  const btnEdit = document.createElement("button");
+  btnEdit.textContent = "Editar";
+  btnEdit.classList.add("editar");
+  btnEdit.onclick = () => {
+    onEditRegister(register);
+  };
+  listItem.appendChild(btnEdit);
+
+  const btnDelete = document.createElement("button");
+  btnDelete.textContent = "Excluir";
+  btnDelete.classList.add("excluir");
+  btnDelete.onclick = () => {
+    alert("Este ponto não pode ser excluído.");
+  };
+  listItem.appendChild(btnDelete);
+
+  if (register.obs) {
+    const obs = document.createElement("p");
+    obs.textContent = `Observação: ${register.obs}`;
+    listItem.appendChild(obs);
+    listItem.classList.add("registro-com-observacao");
+
+    // justificativa
+    if (register.justificativa) {
+      const justificativa = document.createElement("p");
+      justificativa.textContent = `Justificativa: ${register.justificativa}`;
+      listItem.appendChild(justificativa);
+    }
+
+    if (register.arquivo) {
+      const link = document.createElement("a");
+      link.href = register.arquivo; // URL do arquivo
+      link.textContent = "Download do arquivo";
+      link.target = "_blank"; // Abre o link em uma nova aba
+      listItem.appendChild(link);
+    }
+  }
+
+  return listItem;
+}
+
+function createJustificationRegisterItem(register) {
+  const listItem = document.createElement("li");
+  listItem.classList.add("pontos-registrados");
+
+  const date = new Date(register.date).toLocaleDateString("pt-BR");
+  listItem.textContent = `Justificativa em ${date}`;
+
+  const btnEdit = document.createElement("button");
+  btnEdit.textContent = "Editar";
+  btnEdit.classList.add("editar");
+  btnEdit.onclick = () => {
+    onEditRegister(register);
+  };
+  listItem.appendChild(btnEdit);
+
+  const justificationText = document.createElement("p");
+  justificationText.textContent = `${register.obs}`;
+  listItem.appendChild(justificationText);
+  return listItem;
 }
 
 // Evento do botão de filtrar
@@ -129,8 +170,14 @@ btnFiltrar.onclick = () => {
 displayRegisteredPoints();
 
 function onEditRegister(register) {
-  registerDateInput.setAttribute("value", new Date(register.date).toISOString().split("T")[0]);
-  registerDateInput.setAttribute("min", new Date(Date.now()).toISOString().split("T")[0]);
+  registerDateInput.setAttribute(
+    "value",
+    new Date(register.date).toISOString().split("T")[0]
+  );
+  registerDateInput.setAttribute(
+    "min",
+    new Date(Date.now()).toISOString().split("T")[0]
+  );
   registerTimeInput.value = register.time;
   selectRegisterType.value = register.type;
   registerObservationInput.value = register.obs;
