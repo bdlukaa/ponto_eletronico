@@ -6,9 +6,9 @@
 
 body {
   font-family: "Arial", sans-serif;
-  /* background-color: #e6e1f7; lilás claro */
   color: #4b0082;
   line-height: 1.6;
+  height: 100vh;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -80,3 +80,4 @@ footer p {
   margin: 0;
   font-size: 1em;
 }
+

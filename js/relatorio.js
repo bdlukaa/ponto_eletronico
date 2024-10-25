@@ -130,9 +130,16 @@ function createRegisterItem(register) {
     listItem.classList.add("registro-editado");
   }
 
-  const type = register.type.charAt(0).toUpperCase() + register.type.slice(1);
+  const typeName = {
+    "entrada": "Entrada",
+    "saida": "Saída",
+    "intervalo": "Intervalo",
+    "volta-intervalo": "Volta do Intervalo",
+    "justificativa": "Justificativa",
+  };
+
   const date = new Date(register.date).toLocaleDateString("pt-BR");
-  listItem.textContent = `${type} em ${date} às ${register.time}`;
+  listItem.textContent = `${typeName[register.type]} em ${date} às ${register.time}`;
 
   const btnEdit = document.createElement("button");
   btnEdit.textContent = "Editar";
