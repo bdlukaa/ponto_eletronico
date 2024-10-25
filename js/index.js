@@ -18,6 +18,7 @@ const userMapElement = document.getElementById("user-map");
 
 const REGISTER_KEY = "register";
 const LAST_REGISTER_KEY = "lastRegister";
+const JUSTIFICATIVAS_KEY = "justifications";
 
 let hasChangedTime = false;
 
@@ -157,8 +158,6 @@ async function createRegister() {
     time: registerTimeInput.value,
     type: selectRegisterType.value,
     obs: registerObservationInput.value,
-    justificativa: document.getElementById("justificativa").value,
-    arquivo: document.getElementById("upload-arquivo").files[0], //armazena o arquivo
   };
   console.log("Created register:", register);
   return register;
@@ -208,10 +207,10 @@ async function register() {
 }
 
 // LocalStorage Handling
-function saveRegisterLocalStorage(register) {
-  const registers = getRegisterLocalStorage(REGISTER_KEY);
+function saveRegisterLocalStorage(register, key) {
+  const registers = getRegisterLocalStorage(key || REGISTER_KEY);
   registers.push(register);
-  localStorage.setItem(REGISTER_KEY, JSON.stringify(registers));
+  localStorage.setItem(key || REGISTER_KEY, JSON.stringify(registers));
   console.log("Updated localStorage with new register:", registers);
 }
 
@@ -242,18 +241,45 @@ function getUserLocation() {
   });
 }
 
-// Initial Updates
+const registerJustificationButton = document.getElementById(
+  "btn-registrar-justificativa"
+);
+const justificativaDialog = document.getElementById("dialog-justificativa");
+const justificativaTextArea = document.getElementById("justificativa");
+const btnJustificativaRegister = document.getElementById("btn-justification-register");
+registerJustificationButton.addEventListener("click", () => {
+  justificativaDialog.showModal();
+});
+
+function createJustificativaRegister() {
+  const register = {
+    id: Date.now(),
+    registerDate: getCurrentDate(),
+    type: "justificativa",
+    obs: justificativaTextArea.value,
+  };
+  console.log("Created register:", register);
+  return register;
+}
+justificativaDialog.onclose = () => {
+  justificativaTextArea.value = "";
+}
+
+btnJustificativaRegister.addEventListener("click", async (event) => {
+  event.preventDefault();
+  try {
+    const register = createJustificativaRegister();
+    saveRegisterLocalStorage(register, JUSTIFICATIVAS_KEY);
+    showSuccessAlert();
+    justificativaDialog.close();
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+  updateContent();
+});
+
 function updateContent() {
   updateContentHour();
   setInterval(updateContentHour, 1000);
 }
 updateContent();
-
-const registerJustificationButton = document.getElementById(
-  "btn-registrar-justificativa"
-);
-const justificativaDialog = document.getElementById("dialog-justificativa");
-
-registerJustificationButton.addEventListener("click", () => {
-  justificativaDialog.showModal();
-});
