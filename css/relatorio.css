@@ -6,13 +6,13 @@
 
 body {
   font-family: "Arial", sans-serif;
-  background-color: #f7f9fc;
-  color: #222;
+  /* background-color: #e6e1f7; */
+  color: #4b0082;
   line-height: 1.6;
 }
 
 h2 {
-  color: #333;
+  color: #663399;
   font-size: 2em;
   font-family: "Roboto", sans-serif;
 }
@@ -30,18 +30,18 @@ h2 {
 }
 
 .pontos-registrados li {
-  background-color: #eee;
+  /* background-color: #d8bfd8; */
   margin: 15px 0;
   padding: 20px;
   border-radius: 12px;
   transition: background-color 0.3s;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-left: 5px solid #3b7e4a;
+  border-left: 5px solid #9370db;
   position: relative;
 }
 
 .pontos-registrados li:hover {
-  background-color: #ddd;
+  background-color: #c9a9d9;
 }
 
 .pontos-registrados button {
@@ -54,28 +54,28 @@ h2 {
 }
 
 .pontos-registrados button.editar {
-  background-color: #007bff;
+  background-color: #8a2be2;
   color: white;
 }
 
 .pontos-registrados button.editar:hover {
-  background-color: #0056b3;
+  background-color: #6a0dad;
   transform: translateY(-2px);
 }
 
 .pontos-registrados button.excluir {
-  background-color: #dc3545;
+  background-color: #ba55d3;
   color: white;
 }
 
 .pontos-registrados button.excluir:hover {
-  background-color: #c82333;
+  background-color: #9932cc;
   transform: translateY(-2px);
 }
 
 .registro-passado {
-  border-right: 2px solid green;
-  border-bottom: 2px solid green;
+  border-right: 2px solid #9370db;
+  border-bottom: 2px solid #9370db;
 }
 
 .registro-passado::before,
@@ -83,7 +83,7 @@ h2 {
   position: absolute;
   top: -5px;
   right: 10px;
-  background-color: #3b7e4a;
+  background-color: #9370db;
   color: white;
   padding: 4px 10px;
   font-size: 0.8em;
@@ -95,14 +95,16 @@ h2 {
 }
 
 .registro-editado {
-  border-right: 2px solid #007bff;
-  border-bottom: 2px solid #007bff;
+  border-right: 2px solid #8a2be2;
+  border-bottom: 2px solid #8a2be2;
+  border-top: 2px solid #8a2be2;
+  font-weight: bold;
 }
 
-.registro-editado::before {
+/* .registro-editado::before {
   content: "Editado";
-  background-color: #007bff;
-}
+  background-color: #8a2be2;
+} */
 
 .header-relatorio {
   display: flex;
@@ -113,7 +115,7 @@ h2 {
 }
 
 .back-button {
-  background-color: #2d6a39;
+  background-color: #9370db;
   color: white;
   border: none;
   padding: 10px 16px;
@@ -125,12 +127,12 @@ h2 {
 }
 
 .back-button:hover {
-  background-color: #249031;
+  background-color: #8a2be2;
   transform: translateY(-2px);
 }
 
 footer {
-  background-color: #3b7e4a;
+  background-color: #9370db;
   color: white;
   padding: 15px 0;
   text-align: center;
@@ -159,7 +161,7 @@ footer p {
 }
 
 .filtro button {
-  background-color: #2d6a39;
+  background-color: #9370db;
   color: white;
   border: none;
   border-radius: 5px;
@@ -170,6 +172,6 @@ footer p {
 }
 
 .filtro button:hover {
-  background-color: #249031;
+  background-color: #8a2be2;
   transform: translateY(-2px);
 }

@@ -1,5 +1,5 @@
 .highlight-button {
-  background-color: #2d6a39;
+  background-color: #9370db;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -11,14 +11,14 @@
 }
 
 .highlight-button:hover {
-  background-color: #249031;
+  background-color: #8a2be2;
   transform: translateY(-2px);
 }
 
 .outlined-button {
   background-color: transparent;
-  color: #2d6a39;
-  border: 2px solid #2d6a39;
+  color: #9370db;
+  border: 2px solid #9370db;
   padding: 8px 12px;
   font-size: 1.2em;
   border-radius: 12px;
@@ -28,14 +28,14 @@
 }
 
 .outlined-button:hover {
-  background-color: #2d6a39;
+  background-color: #9370db;
   color: white;
   transform: translateY(-2px);
 }
 
 .text-button {
   background-color: transparent;
-  color: #2d6a39;
+  color: #9370db;
   border: none;
   border-radius: 12px;
   padding: 8px 12px;
@@ -46,7 +46,7 @@
 }
 
 .text-button:hover {
-  background-color: #2d6a3965;
+  background-color: #9370db65;
 }
 
 label,
@@ -55,13 +55,13 @@ input {
   display: block;
   width: 100%;
   margin: 10px 0;
-  color: #222;
+  color: #4b0082;
 }
 
 input,
 select {
   padding: 12px;
-  border: 1px solid #aaa;
+  border: 1px solid #8a2be2;
   border-radius: 5px;
   font-size: 1em;
 }
