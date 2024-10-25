@@ -64,6 +64,24 @@
       <button id="dialog-fechar" onclick="dialogPonto.close()">x</button>
     </dialog>
 
+    <dialog id="dialog-edit">
+      <form id="form-ponto">
+        <div>
+          <textarea
+            id="edit-justification"
+            rows="5"
+            placeholder="Digite uma justificativa:"
+          ></textarea>
+        </div>
+
+        <button type="submit" id="btn-justification-edit" class="highlight-button" formnovalidate>
+          Editar
+        </button>
+      </form>
+
+      <button id="dialog-fechar" onclick="justificationEditDialog.close()">x</button>
+    </dialog>
+
     <script src="../js/relatorio.js"></script>
   </body>
 </html>

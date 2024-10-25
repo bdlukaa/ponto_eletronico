@@ -119,21 +119,6 @@ function createRegisterItem(register) {
     obs.textContent = `Observação: ${register.obs}`;
     listItem.appendChild(obs);
     listItem.classList.add("registro-com-observacao");
-
-    // justificativa
-    if (register.justificativa) {
-      const justificativa = document.createElement("p");
-      justificativa.textContent = `Justificativa: ${register.justificativa}`;
-      listItem.appendChild(justificativa);
-    }
-
-    if (register.arquivo) {
-      const link = document.createElement("a");
-      link.href = register.arquivo; // URL do arquivo
-      link.textContent = "Download do arquivo";
-      link.target = "_blank"; // Abre o link em uma nova aba
-      listItem.appendChild(link);
-    }
   }
 
   return listItem;
@@ -150,13 +135,25 @@ function createJustificationRegisterItem(register) {
   btnEdit.textContent = "Editar";
   btnEdit.classList.add("editar");
   btnEdit.onclick = () => {
-    onEditRegister(register);
+    onEditJustification(register);
   };
   listItem.appendChild(btnEdit);
 
   const justificationText = document.createElement("p");
   justificationText.textContent = `${register.obs}`;
   listItem.appendChild(justificationText);
+
+  if (register.arquivo) {
+    const link = document.createElement("a");
+    link.href = register.arquivo; // URL do arquivo
+    link.textContent = "Download do arquivo";
+    link.target = "_blank"; // Abre o link em uma nova aba
+    listItem.appendChild(link);
+  }
+
+  if (register.edited) {
+    listItem.classList.add("registro-editado");
+  }
   return listItem;
 }
 
@@ -204,4 +201,30 @@ function onEditRegister(register) {
     displayRegisteredPoints();
     dialogPonto.close();
   };
+}
+
+const justificationEditDialog = document.getElementById("dialog-edit");
+const justificationEditTextArea = document.getElementById("edit-justification");
+const btnJustificativaEdit = document.getElementById("btn-justification-edit");
+
+function onEditJustification(register) {
+  justificationEditTextArea.value = register.obs;
+  btnJustificativaEdit.onclick = () => {
+    const justifications = getRegisterLocalStorage(JUSTIFICATIVAS_KEY);
+    const justificationIndex = justifications.findIndex(
+      (reg) => reg.id === register.id
+    );
+
+    justifications[justificationIndex] = {
+      ...register,
+      obs: justificationEditTextArea.value,
+      edited: true,
+      editDate: new Date().toISOString().split("T")[0],
+    };
+
+    localStorage.setItem(JUSTIFICATIVAS_KEY, JSON.stringify(justifications));
+    displayRegisteredPoints();
+    justificationEditDialog.close();
+  };
+  justificationEditDialog.showModal();
 }

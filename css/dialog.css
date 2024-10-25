@@ -13,7 +13,8 @@ dialog {
   transform: translate(-50%, -50%);
 }
 
-#dialog-fechar {
+#dialog-fechar,
+#justification-fechar {
   color: black;
   border: none;
   padding: 5px 10px;
@@ -25,7 +26,8 @@ dialog {
   font-size: 1.2em;
 }
 
-#dialog-fechar:hover {
+#dialog-fechar:hover,
+#justification-fechar:hover {
   background-color: #ff4a42;
   color: white;
 }

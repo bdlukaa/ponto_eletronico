@@ -246,7 +246,9 @@ const registerJustificationButton = document.getElementById(
 );
 const justificativaDialog = document.getElementById("dialog-justificativa");
 const justificativaTextArea = document.getElementById("justificativa");
-const btnJustificativaRegister = document.getElementById("btn-justification-register");
+const btnJustificativaRegister = document.getElementById(
+  "btn-justification-register"
+);
 registerJustificationButton.addEventListener("click", () => {
   justificativaDialog.showModal();
 });
@@ -258,13 +260,14 @@ function createJustificativaRegister() {
     date: new Date().toISOString(),
     type: "justificativa",
     obs: justificativaTextArea.value,
+    arquivo: document.getElementById("upload-arquivo").files[0], //armazena o arquivo
   };
   console.log("Created register:", register);
   return register;
 }
 justificativaDialog.onclose = () => {
   justificativaTextArea.value = "";
-}
+};
 
 btnJustificativaRegister.addEventListener("click", async (event) => {
   event.preventDefault();
