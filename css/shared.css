@@ -32,3 +32,21 @@
   color: white;
   transform: translateY(-2px);
 }
+
+.text-button {
+  background-color: transparent;
+  color: #2d6a39;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 100%;
+}
+
+.text-button:hover {
+  background-color: #2d6a39;
+  color: white;
+  transform: translateY(-2px);
+}
