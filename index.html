@@ -9,101 +9,102 @@
     <link rel="stylesheet" href="css/shared.css" />
   </head>
   <body>
-    <header>
-      <h5>Sistema de Ponto Eletrônico</h1>
-      <button
-        id="btn-redirect"
-        onclick="window.location.href='html/relatorio.html'"
-        class="redirect-button"
-      >
-        Ver Relatório
-      </button> 
-    </header>
+    <div class="data-hora">
+      <p id="dia-semana"></p>
+      <p id="data-atual"></p>
+      <p id="hora-atual"></p>
+    </div>
 
-    <main>
-      <section class="data-hora">
-        <p id="dia-semana"></p>
-        <p id="data-atual"></p>
-        <p id="hora-atual"></p>
-      </section>
-
-      <section class="registro-ponto">
+    <section class="registro-ponto">
+      <div style="display: flex">
         <button id="btn-registrar-ponto" class="highlight-button">
           Registrar ponto
         </button>
+        <button
+          id="btn-registrar-justificativa"
+          class="outlined-button"
+          style="margin-left: 10px"
+        >
+          Registrar justificativa
+        </button>
+      </div>
+      <button
+        id="btn-registrar-justificativa"
+        onclick="window.location.href='html/relatorio.html'"
+        class="redirect-button"
+        style="background-color: rgb(27, 196, 27); margin-top: 10px"
+      >
+        Ver relatório
+      </button>
 
-        <dialog id="dialog-ponto">
-          <form id="form-ponto">
-            <!-- <label for="register-date">Data do Registro:</label> -->
-            <div style="display: flex;">
-              <input type="date" id="register-date" max="" style="margin-right: 8px;"/>
-              <input type="time" id="register-time" max="" />
-            </div>
-            <!-- <label for="register-type">Tipo de Registro:</label> -->
-            <select name="register-type" id="register-type">
-              <option value="entrada">Entrada</option>
-              <option value="intervalo">Intervalo</option>
-              <option value="volta-intervalo">Volta Intervalo</option>
-              <option value="saida">Saída</option>
-            </select>
+      <dialog id="dialog-ponto">
+        <form id="form-ponto">
+          <!-- <label for="register-date">Data do Registro:</label> -->
+          <div style="display: flex">
+            <input
+              type="date"
+              id="register-date"
+              max=""
+              style="margin-right: 8px"
+            />
+            <input type="time" id="register-time" max="" />
+          </div>
+          <!-- <label for="register-type">Tipo de Registro:</label> -->
+          <select name="register-type" id="register-type">
+            <option value="entrada">Entrada</option>
+            <option value="intervalo">Intervalo</option>
+            <option value="volta-intervalo">Volta Intervalo</option>
+            <option value="saida">Saída</option>
+          </select>
 
-            <div>
-              <textarea
-                id="register-observation"
-                rows="1"
-                placeholder="Digite uma observação:"
-              ></textarea>
-            </div>
+          <div>
+            <textarea
+              id="register-observation"
+              rows="1"
+              placeholder="Digite uma observação:"
+            ></textarea>
+          </div>
 
-            <!-- upload do arquivo e justificativa-->
-
-            <div>
-              <textarea
-              id="justificativa"
-              rows="5"
-              placeholder="Digite uma justificativa para a ausência:"
-              ></textarea>
-            </div>
-            <div>
-              <label for="upload-arquivo">Upload do arquivo:</label>
-              <input type="file" id="upload-arquivo"/>
-            </div>
-
-            <p id="user-location"></p>
-            
-            <iframe
+          <p id="user-location"></p>
+          <iframe
             id="user-map"
             width="100%"
             height="0"
-            style="border:0"
+            style="border: 0"
             loading="lazy"
           ></iframe>
 
-            <button
-              type="submit"
-              id="btn-dialog-register"
-              class="highlight-button"
-            >
-              Registrar
-            </button>
-          </form>
+          <button
+            type="submit"
+            id="btn-dialog-register"
+            class="highlight-button"
+          >
+            Registrar
+          </button>
+        </form>
 
-          <p id="dialog-ultimo-registro"></p>
-          <button id="dialog-fechar" onclick="dialogPonto.close()">x</button>
-        </dialog>
-      </section>
+        <p id="dialog-ultimo-registro"></p>
+        <button id="dialog-fechar" onclick="dialogPonto.close()">x</button>
+      </dialog>
 
-      <div id="alerta-ponto-registrado" class="hidden">
-        <p>Ponto registrado com sucesso!</p>
-      </div>
+      <dialog id="dialog-justificativa">
+        <div>
+          <textarea
+            id="justificativa"
+            rows="5"
+            placeholder="Digite uma justificativa para a ausência:"
+          ></textarea>
+        </div>
+        <div>
+          <label for="upload-arquivo">Upload do arquivo:</label>
+          <input type="file" id="upload-arquivo" />
+        </div>
+      </dialog>
+    </section>
 
-    </main>
-
-    <footer>
-      <p>
-        &copy; 2024 Sistema de Ponto Eletrônico. Todos os direitos reservados.
-      </p>
-    </footer>
+    <div id="alerta-ponto-registrado" class="hidden">
+      <p>Ponto registrado com sucesso!</p>
+    </div>
 
     <script src="js/index.js"></script>
   </body>

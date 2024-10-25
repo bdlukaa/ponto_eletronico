@@ -9,6 +9,12 @@ body {
   background-color: #f7f9fc;
   color: #222;
   line-height: 1.6;
+
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 header {
@@ -27,10 +33,7 @@ header {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
-}
-
-main {
-  padding: 20px;
+  width: 100%;
 }
 
 .data-hora {
@@ -41,6 +44,8 @@ main {
 .data-hora p {
   margin: 5px 0;
   color: #444;
+  font-size: 35px;
+  text-align: center;
 }
 
 #alerta-ponto-registrado {
