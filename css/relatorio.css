@@ -140,37 +140,6 @@ footer p {
   margin: 0;
 }
 
-.filtro {
-  margin-bottom: 20px;
-  display: inline-flex;
-}
-
-.filtro label {
-  margin-right: 10px;
-}
-
-.filtro select {
-  padding: 5px;
-  margin-right: 10px;
-  width: 200px;
-}
-
-.filtro button {
-  background-color: #9370db;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.filtro button:hover {
-  background-color: #8a2be2;
-  transform: translateY(-2px);
-}
-
 .download {
   background-color: #9370db;
   color: white;
@@ -185,4 +154,64 @@ footer p {
 .download:hover {
   background-color: #8a2be2;
   transform: translateY(-2px);
+}
+
+.filtro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filtro div {
+  display: flex;
+  align-items: center;
+}
+
+.filtro button {
+  margin-left: 10px;
+  /* padding: 6px 12px; */
+}
+
+.filtro button:hover {
+  background-color: #9370db;
+  color: white;
+}
+
+.filtro input {
+  padding: 5px;
+  border: 1px solid #9370db;
+  border-radius: 5px;
+}
+
+.filtro select {
+  padding: 5px;
+  border: 1px solid #9370db;
+  border-radius: 5px;
+  /* width: 225px; */
+}
+
+.filtro input[type="checkbox"] {
+  accent-color: #9370db;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.filtro input[type="checkbox"]:hover {
+  transform: scale(1.1);
+}
+
+label {
+  /* width: 150px; */
+  margin-right: 10px;
+  color: #4b0082;
+  white-space: nowrap;
+}
+
+#pontos-registrados p {
+  font-style: italic;
+  color: #555;
 }

@@ -22,14 +22,34 @@
       </div>
 
       <div class="filtro">
-        <label for="filtro-periodo">Filtrar por período:</label>
-        <select id="filtro-periodo">
-          <option value="todos">Todos</option>
-          <option value="ultima-semana">Última Semana</option>
-          <option value="ultimo-mes">Último Mês</option>
-        </select>
+        <div>
+          <label for="filter-option">Filtrar por:</label>
+          <select id="filter-option" name="filter-option">
+            <option value="todos">Todos</option>
+            <option value="ultima-semana">Ultima semana</option>
+            <option value="ultimo-mes">Ultimo mês</option>
+          </select>
+        </div>
+        <div>
+          <label for="filter-start-date">Data de Início:</label>
+          <input type="date" id="filter-start-date" name="filter-start-date" />
+        </div>
+        <div>
+          <label for="filter-end-date">Data Final:</label>
+          <input type="date" id="filter-end-date" name="filter-end-date" />
+        </div>
+        <div>
+          <label for="filter-justificativa">Somente Justificativa:</label>
+          <input
+            type="checkbox"
+            id="filter-justificativa"
+            name="filter-justificativa"
+          />
+        </div>
         <button id="btn-filtrar">Filtrar</button>
+        <button id="btn-clear-filter">Limpar Filtro</button>
       </div>
+      <p id="pontos-registrados" style="display: none"></p>
 
       <ul id="lista-pontos-registrados"></ul>
     </section>
@@ -55,7 +75,12 @@
           ></textarea>
         </div>
 
-        <button type="submit" id="btn-dialog-register" class="highlight-button" formnovalidate>
+        <button
+          type="submit"
+          id="btn-dialog-register"
+          class="highlight-button"
+          formnovalidate
+        >
           Editar
         </button>
       </form>
@@ -76,12 +101,19 @@
           ></textarea>
         </div>
 
-        <button type="submit" id="btn-justification-edit" class="highlight-button" formnovalidate>
+        <button
+          type="submit"
+          id="btn-justification-edit"
+          class="highlight-button"
+          formnovalidate
+        >
           Editar
         </button>
       </form>
 
-      <button id="dialog-fechar" onclick="justificationEditDialog.close()">x</button>
+      <button id="dialog-fechar" onclick="justificationEditDialog.close()">
+        x
+      </button>
     </dialog>
 
     <script src="../js/relatorio.js"></script>

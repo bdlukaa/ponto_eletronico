@@ -11,7 +11,7 @@ const registerObservationInput = document.getElementById(
 
 // Lista
 const pontosRegistrados = document.getElementById("lista-pontos-registrados");
-const filtroPeriodo = document.getElementById("filtro-periodo");
+const filtroPeriodo = document.getElementById("filter-option");
 const btnFiltrar = document.getElementById("btn-filtrar");
 
 const REGISTER_KEY = "register";
@@ -23,28 +23,51 @@ function getRegisterLocalStorage(key) {
   return storedData ? JSON.parse(storedData) : [];
 }
 
-// Exibir os pontos registrados
+const startDateInput = document.getElementById("filter-start-date");
+const endDateInput = document.getElementById("filter-end-date");
+const justificativasCheckbox = document.getElementById("filter-justificativa");
+const btnClearFilter = document.getElementById("btn-clear-filter");
+
 function displayRegisteredPoints(filtro = "todos") {
   pontosRegistrados.innerHTML = "";
   const registers = [
     ...getRegisterLocalStorage(REGISTER_KEY),
     ...getRegisterLocalStorage(JUSTIFICATIVAS_KEY),
   ];
-  const currentDate = new Date();
 
-  // Filtragem dos registros por período
+  const currentDate = new Date();
+  const startDate = new Date(startDateInput.value);
+  const endDate = new Date(endDateInput.value);
+  const filterJustificativas = justificativasCheckbox.checked;
+
   const filteredRegisters = registers.filter((register) => {
-    if (filtro === "ultima-semana") {
-      return currentDate - Date.parse(register.date) <= 7 * 24 * 60 * 60 * 1000;
-    } else if (filtro === "ultimo-mes") {
-      return (
-        currentDate - Date.parse(register.date) <= 30 * 24 * 60 * 60 * 1000
-      );
+    const registerDate = new Date(register.date);
+
+    if (filtro === "ultima-semana" && currentDate - registerDate > 7 * 24 * 60 * 60 * 1000) {
+      return false;
+    } else if (filtro === "ultimo-mes" && currentDate - registerDate > 30 * 24 * 60 * 60 * 1000) {
+      return false;
     }
-    return true; // Sem filtro
+
+    if (startDateInput.value && registerDate < startDate) {
+      return false;
+    }
+    if (endDateInput.value && registerDate > endDate) {
+      return false;
+    }
+
+    if (filterJustificativas && register.type !== "justificativa") {
+      return false;
+    }
+
+    return true;
   });
 
-  // Agrupando por data
+  if (filteredRegisters.length === 0) {
+    pontosRegistrados.innerHTML = "<p>Nenhum registro encontrado para o período selecionado.</p>";
+    return;
+  }
+
   const groupedRegisters = {};
   filteredRegisters.forEach((register) => {
     const date = new Date(register.date).toLocaleDateString("pt-BR");
@@ -61,23 +84,36 @@ function displayRegisteredPoints(filtro = "todos") {
     }
   });
 
-  // Adiciona os registros ao DOM
   for (const date in groupedRegisters) {
     const dateHeader = document.createElement("h3");
     dateHeader.textContent = date;
     pontosRegistrados.appendChild(dateHeader);
 
     groupedRegisters[date].forEach((register) => {
-      if (register.type == "justificativa") {
-        const listItem = createJustificationRegisterItem(register);
-        pontosRegistrados.appendChild(listItem);
-      } else {
-        const listItem = createRegisterItem(register);
-        pontosRegistrados.appendChild(listItem);
-      }
+      const listItem = register.type === "justificativa"
+        ? createJustificationRegisterItem(register)
+        : createRegisterItem(register);
+      pontosRegistrados.appendChild(listItem);
     });
   }
 }
+
+startDateInput.onchange = () => {
+  endDateInput.setAttribute("min", startDateInput.value);
+};
+
+btnFiltrar.onclick = () => {
+  const selectedFilter = filtroPeriodo.value;
+  displayRegisteredPoints(selectedFilter);
+};
+
+btnClearFilter.onclick = () => {
+  filtroPeriodo.value = "todos";
+  startDateInput.value = "";
+  endDateInput.value = "";
+  justificativasCheckbox.checked = false;
+  displayRegisteredPoints();
+};
 
 function createRegisterItem(register) {
   const listItem = document.createElement("li");
