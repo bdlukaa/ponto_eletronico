@@ -143,9 +143,11 @@ function createRegisterItem(register) {
     locationIframe.loading = "lazy";
     locationIframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${
       register.location.longitude - 0.005
-    },${register.location.latitude - 0.005},${register.location.longitude + 0.005},${
-      register.location.latitude + 0.005
-    }&layer=mapnik&marker=${register.location.latitude},${register.location.longitude}`;
+    },${register.location.latitude - 0.005},${
+      register.location.longitude + 0.005
+    },${register.location.latitude + 0.005}&layer=mapnik&marker=${
+      register.location.latitude
+    },${register.location.longitude}`;
     listItem.appendChild(locationIframe);
   }
 
@@ -169,6 +171,9 @@ function createJustificationRegisterItem(register) {
 
   const justificationText = document.createElement("p");
   justificationText.textContent = `${register.obs}`;
+  if (register.arquivo) {
+    justificationText.style.marginBottom = "10px";
+  }
   listItem.appendChild(justificationText);
 
   if (register.arquivo) {
@@ -176,6 +181,7 @@ function createJustificationRegisterItem(register) {
     link.href = register.arquivo; // URL do arquivo
     link.textContent = "Download do arquivo";
     link.target = "_blank"; // Abre o link em uma nova aba
+    link.classList.add("download");
     listItem.appendChild(link);
   }
 

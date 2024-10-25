@@ -260,13 +260,14 @@ registerJustificationButton.addEventListener("click", () => {
 });
 
 function createJustificativaRegister() {
+  console.log(document.getElementById("upload-arquivo").files);
   const register = {
     id: Date.now(),
     registerDate: getCurrentDate(),
     date: new Date().toISOString(),
     type: "justificativa",
     obs: justificativaTextArea.value,
-    arquivo: document.getElementById("upload-arquivo").files[0], //armazena o arquivo
+    arquivo: document.getElementById("upload-arquivo").files[0],
   };
   console.log("Created register:", register);
   return register;
