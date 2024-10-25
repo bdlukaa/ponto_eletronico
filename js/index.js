@@ -158,6 +158,7 @@ async function createRegister() {
     time: registerTimeInput.value,
     type: selectRegisterType.value,
     obs: registerObservationInput.value,
+    location: userLocation,
   };
   console.log("Created register:", register);
   return register;
@@ -221,12 +222,17 @@ function getRegisterLocalStorage(key) {
   return registers;
 }
 
+let userLocation = null;
+
 // Geolocation
 function getUserLocation() {
+  if (userLocation) {
+    return Promise.resolve(userLocation);
+  }
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const userLocation = {
+        userLocation = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         };

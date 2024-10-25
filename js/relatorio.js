@@ -121,6 +121,34 @@ function createRegisterItem(register) {
     listItem.classList.add("registro-com-observacao");
   }
 
+  if (register.location) {
+    // const location = document.createElement("p");
+    // location.textContent = `Localização: ${register.location.latitude.toFixed(
+    //   4
+    // )}, ${register.location.longitude.toFixed(4)}`;
+    // listItem.appendChild(location);
+
+    // <iframe
+    // id="user-map"
+    // width="100%"
+    // height="0"
+    // style="border: 0"
+    // loading="lazy"
+    // ></iframe>
+    const locationIframe = document.createElement("iframe");
+    locationIframe.id = "user-map";
+    locationIframe.width = "100%";
+    locationIframe.height = "100px";
+    locationIframe.style.border = "0";
+    locationIframe.loading = "lazy";
+    locationIframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${
+      register.location.longitude - 0.005
+    },${register.location.latitude - 0.005},${register.location.longitude + 0.005},${
+      register.location.latitude + 0.005
+    }&layer=mapnik&marker=${register.location.latitude},${register.location.longitude}`;
+    listItem.appendChild(locationIframe);
+  }
+
   return listItem;
 }
 
