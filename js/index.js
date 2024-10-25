@@ -117,10 +117,10 @@ async function handleRegister(event) {
   try {
     const register = await createRegister();
 
-    if(register.arquivo){
+    if (register.arquivo) {
       const reader = new FileReader(); //lê conteúdo do arquivo
       //"e" é o obj q contém infos sobre a leitura
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         //armazena conteúdo do arquivo
         const arquivoContent = e.target.result;
         console.log("Arquivo lido:", arquivoContent);
@@ -171,7 +171,8 @@ async function register() {
   );
 
   if (lastRegister) {
-    dialogUltimoRegistro.textContent = `Último Registro: ${lastRegister.date} às ${lastRegister.time} - ${lastRegister.type}`;
+    const dateText = new Date(lastRegister.date).toLocaleDateString("pt-BR");
+    dialogUltimoRegistro.textContent = `Último Registro: ${dateText} às ${lastRegister.time} - ${lastRegister.type}`;
     console.log("Last register displayed:", lastRegister);
   } else {
     console.log("No last register found.");
@@ -248,7 +249,9 @@ function updateContent() {
 }
 updateContent();
 
-const registerJustificationButton = document.getElementById("btn-registrar-justificativa");
+const registerJustificationButton = document.getElementById(
+  "btn-registrar-justificativa"
+);
 const justificativaDialog = document.getElementById("dialog-justificativa");
 
 registerJustificationButton.addEventListener("click", () => {
